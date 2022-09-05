@@ -1,3 +1,4 @@
 import Strings from './strings';
+import GlobalConstants from './GlobalConstants';
 
-export { Strings };
+export { Strings, GlobalConstants };

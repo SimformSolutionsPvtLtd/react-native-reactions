@@ -13,6 +13,7 @@ export interface ReactionViewProps {
   emojiStyle?: StyleProp<TextStyle>;
   touchableProps?: TouchableOpacityProps;
   emojiKey?: string;
+  iconSize?: number;
 }
 
 export interface EmojiItemProp {

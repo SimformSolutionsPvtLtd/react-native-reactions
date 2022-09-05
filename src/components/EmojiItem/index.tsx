@@ -1,9 +1,11 @@
 import React from 'react';
 import { Animated, Pressable, StyleSheet, Text } from 'react-native';
-import { isValidUrl } from '../../utils';
+import { verticalScale } from '../../theme';
 import EmojiImage from '../EmojiImage';
+import { useEmojiItem } from './hooks';
 import styles from './styles';
 import type { emojiData, EmojiItemProps } from './types';
+import { isValidUrl } from '../../utils';
 
 const EmojiButton = ({
   emojiData,
@@ -34,19 +36,33 @@ const EmojiButton = ({
   }
 };
 
-const EmojiItem = ({
-  data,
-  scaled,
-  emojiStyle,
-  emojiKey,
-  ...rest
-}: EmojiItemProps) => {
+const EmojiItem = (props: EmojiItemProps) => {
+  const {
+    data,
+    onPress,
+    titleStyle,
+    titleBoxStyle,
+    emojiContainerStyle,
+    showTopEmojiCard,
+    emojiKey,
+    emojiStyle,
+    ...rest
+  } = props;
+
+  const { titlePosition, onLayout, scaled } = useEmojiItem(props);
+
   const labelStyle = StyleSheet.flatten([
     styles.titleBox,
     {
-      transform: [{ scale: scaled ? 1.0 : 0 }, { perspective: 1000 }],
+      transform: [
+        { scale: scaled ? 1.0 : 0 },
+        { translateX: titlePosition },
+        { perspective: 1000 },
+      ],
       opacity: scaled ? 1.0 : 0,
+      top: showTopEmojiCard ? verticalScale(60) : verticalScale(-30),
     },
+    titleBoxStyle,
   ]);
 
   const emojiItemStyle = StyleSheet.flatten([
@@ -56,16 +72,22 @@ const EmojiItem = ({
   ]);
 
   return (
-    <Pressable {...rest} style={styles.root}>
+    <>
       {scaled && data?.title && (
         <Animated.View style={labelStyle}>
-          <Text style={styles.title}>{data?.title}</Text>
+          <Text style={[styles.title, titleStyle]}>{data?.title}</Text>
         </Animated.View>
       )}
-      <Animated.View style={emojiItemStyle}>
-        <EmojiButton emojiData={data} {...{ emojiStyle, emojiKey }} />
-      </Animated.View>
-    </Pressable>
+      <Pressable
+        onPress={onPress}
+        style={[styles.root, emojiContainerStyle]}
+        onLayout={onLayout}
+        {...rest}>
+        <Animated.View style={emojiItemStyle}>
+          <EmojiButton emojiData={data} {...{ emojiStyle, emojiKey }} />
+        </Animated.View>
+      </Pressable>
+    </>
   );
 };
 
