@@ -21,6 +21,17 @@ const styles = StyleSheet.create({
     color: Colors.white,
     textAlign: 'center',
   },
+  img: {
+    width: moderateScale(25),
+    height: moderateScale(20),
+    resizeMode: 'contain',
+  },
+  emojiText: {
+    textTransform: 'capitalize',
+    fontSize: moderateScale(20),
+    color: Colors.white,
+    textAlign: 'center',
+  },
 });
 
 export default styles;
