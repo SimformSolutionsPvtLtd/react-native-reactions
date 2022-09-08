@@ -5,3 +5,7 @@ export interface EmojiItemProps {
   scaled: boolean;
   onPress: () => void;
 }
+
+export interface emojiData {
+  emojiData: EmojiItem;
+}

@@ -5,6 +5,6 @@ export interface ReactionViewProps {
 
 export interface EmojiItem {
   id: number;
-  emoji: React.ReactNode;
+  emoji: React.ReactNode | string | number;
   title: string;
 }
