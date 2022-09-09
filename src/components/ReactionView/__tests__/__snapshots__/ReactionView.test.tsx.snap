@@ -12,35 +12,44 @@ exports[`ReactionsView component Match Snapshot 1`] = `
   }
 >
   <View
-    style={
-      Object {
-        "alignItems": "center",
-        "flexDirection": "row",
-        "justifyContent": "center",
-        "width": "100%",
-        "zIndex": 11,
-      }
-    }
+    onEnded={[Function]}
+    onGestureEvent={[Function]}
   >
-    <View />
     <View
-      accessible={true}
       collapsable={false}
-      focusable={true}
-      onClick={[Function]}
-      onLayout={[Function]}
-      onResponderGrant={[Function]}
-      onResponderMove={[Function]}
-      onResponderRelease={[Function]}
-      onResponderTerminate={[Function]}
-      onResponderTerminationRequest={[Function]}
-      onStartShouldSetResponder={[Function]}
       style={
         Object {
-          "opacity": 1,
+          "zIndex": 11,
         }
       }
-    />
+    >
+      <View
+        style={
+          Object {
+            "bottom": undefined,
+            "position": "absolute",
+          }
+        }
+      />
+      <View
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        onClick={[Function]}
+        onLayout={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "opacity": 1,
+          }
+        }
+      />
+    </View>
   </View>
 </RCTSafeAreaView>
 `;

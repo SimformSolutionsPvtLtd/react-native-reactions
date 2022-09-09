@@ -1,10 +1,11 @@
 import React from 'react';
-import { Image } from 'react-native';
+import { Image, StyleSheet } from 'react-native';
 import styles from './styles';
-import type { ImageProps } from './types';
+import type { EmojiImageType } from './types';
 
-const EmojiImage = ({ source }: ImageProps) => (
-  <Image source={source} style={styles.img} />
-);
+const EmojiImage = ({ emojiElementStyle, ...rest }: EmojiImageType) => {
+  const imageStyle = StyleSheet.flatten([styles.img, emojiElementStyle]);
+  return <Image style={imageStyle} {...rest} />;
+};
 
 export default EmojiImage;

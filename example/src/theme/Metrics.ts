@@ -2,6 +2,7 @@ import { Dimensions } from 'react-native';
 
 export const { width: windowWidth, height: windowHeight } =
   Dimensions.get('window');
+const { width: screenWidth, height: screenHeight } = Dimensions.get('screen');
 const isLessWidth = windowWidth < windowHeight;
 const shortDimension = isLessWidth ? windowWidth : windowHeight;
 const longDimension = isLessWidth ? windowHeight : windowWidth;

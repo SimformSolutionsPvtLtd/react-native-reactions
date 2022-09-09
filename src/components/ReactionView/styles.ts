@@ -2,41 +2,32 @@ import { StyleSheet } from 'react-native';
 import { Colors, moderateScale, verticalScale } from '../../theme';
 
 const styles = StyleSheet.create({
-  container: {
+  main: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
   },
+  container: {
+    position: 'absolute',
+  },
   root: {
-    width: '100%',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
     zIndex: 11,
   },
   subContainer: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    height: verticalScale(80),
-    justifyContent: 'center',
     zIndex: 10,
   },
-  floatBox: {
-    alignItems: 'center',
-  },
   emojiBox: {
-    width: '110%',
     flexDirection: 'row',
-    justifyContent: 'center',
-    borderRadius: 33,
-    backgroundColor: Colors.white,
-    shadowColor: '#000',
+    bottom: moderateScale(5),
+    padding: moderateScale(9),
+    backgroundColor: Colors.blue,
+    borderRadius: 30,
+    shadowColor: Colors.black,
     shadowOffset: {
       width: moderateScale(3),
       height: verticalScale(2),
     },
-    shadowOpacity: 0.24,
+    shadowOpacity: 0.5,
     shadowRadius: 1,
   },
 });

@@ -1,4 +1,7 @@
-import type { ImageSourcePropType } from 'react-native';
+import type { ImageSourcePropType, ImageStyle, StyleProp } from 'react-native';
 export type ImageProps = {
   source: ImageSourcePropType;
 };
+export interface EmojiImageType extends ImageProps {
+  emojiElementStyle: StyleProp<ImageStyle>;
+}
