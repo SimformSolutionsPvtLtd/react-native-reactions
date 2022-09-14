@@ -1,55 +1,72 @@
 import React from 'react';
-import { Animated, Pressable, Text } from 'react-native';
+import { Animated, Pressable, StyleSheet, Text } from 'react-native';
+import { isValidUrl } from '../../utils';
+import EmojiImage from '../EmojiImage';
 import styles from './styles';
 import type { emojiData, EmojiItemProps } from './types';
-import EmojiImage from '../EmojiImage';
-import { isValidUrl } from '../../utils';
 
-const EmojiButton = ({ emojiData }: emojiData) => {
-  const isNumber: boolean = typeof emojiData.emoji === 'number';
-
-  const isValidEmement = React.isValidElement(emojiData.emoji);
+const EmojiButton = ({
+  emojiData,
+  emojiStyle,
+  emojiKey = 'emoji',
+}: emojiData) => {
+  const emoji = emojiData?.[emojiKey];
+  const isNumber: boolean = typeof emoji === 'number';
+  const isValidEmement = React.isValidElement(emoji);
+  const emojiElementStyle = StyleSheet.flatten([
+    emojiStyle,
+    emoji?.props?.style ?? {},
+  ]);
 
   if (isValidEmement) {
-    return emojiData.emoji as React.ReactElement;
-  } else if (isValidUrl(emojiData.emoji as string) || isNumber) {
+    return React.cloneElement(emoji as React.ReactElement, {
+      style: emojiElementStyle,
+    });
+  } else if (isValidUrl(emoji as string) || isNumber) {
     return (
       <EmojiImage
-        source={
-          isNumber
-            ? (emojiData?.emoji as number)
-            : { uri: emojiData.emoji as string }
-        }
+        {...{ emojiElementStyle }}
+        source={isNumber ? (emoji as number) : { uri: emoji as string }}
       />
     );
   } else {
-    return <Text style={styles.emojiText}>{emojiData.emoji}</Text>;
+    return <Text style={[styles.emojiText, emojiElementStyle]}>{emoji}</Text>;
   }
 };
 
-const EmojiItem = ({ data, scaled, ...rest }: EmojiItemProps) => (
-  <Pressable {...rest} style={styles.root}>
-    {scaled && (
-      <Animated.View
-        style={[
-          styles.titleBox,
-          {
-            transform: [{ scale: scaled ? 1.0 : 0 }, { perspective: 1000 }],
-          },
-          { opacity: scaled ? 1.0 : 0 },
-        ]}>
-        <Text style={styles.title}>{data.title}</Text>
+const EmojiItem = ({
+  data,
+  scaled,
+  emojiStyle,
+  emojiKey,
+  ...rest
+}: EmojiItemProps) => {
+  const labelStyle = StyleSheet.flatten([
+    styles.titleBox,
+    {
+      transform: [{ scale: scaled ? 1.0 : 0 }, { perspective: 1000 }],
+      opacity: scaled ? 1.0 : 0,
+    },
+  ]);
+
+  const emojiItemStyle = StyleSheet.flatten([
+    {
+      transform: [{ scale: scaled ? 1.5 : 1 }, { perspective: 1000 }],
+    },
+  ]);
+
+  return (
+    <Pressable {...rest} style={styles.root}>
+      {scaled && data?.title && (
+        <Animated.View style={labelStyle}>
+          <Text style={styles.title}>{data?.title}</Text>
+        </Animated.View>
+      )}
+      <Animated.View style={emojiItemStyle}>
+        <EmojiButton emojiData={data} {...{ emojiStyle, emojiKey }} />
       </Animated.View>
-    )}
-    <Animated.View>
-      <Animated.View
-        style={{
-          transform: [{ scale: scaled ? 1.5 : 1 }, { perspective: 1000 }],
-        }}>
-        <EmojiButton emojiData={data} />
-      </Animated.View>
-    </Animated.View>
-  </Pressable>
-);
+    </Pressable>
+  );
+};
 
 export default EmojiItem;

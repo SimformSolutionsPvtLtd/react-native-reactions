@@ -1,38 +1,56 @@
-import React from 'react';
-import { StyleSheet, Text } from 'react-native';
+import React, { useState } from 'react';
+import { Text, View } from 'react-native';
 import { ReactionView } from 'react-native-reactions';
+import { styles } from './AppStyles';
 
-const styles = StyleSheet.create({
-  emojiText: {
-    textTransform: 'capitalize',
-    fontSize: 16,
-    color: '#fff',
-    textAlign: 'center',
-  },
-});
+interface SelectedEmojiType {
+  id: number;
+  emoji: React.ReactNode | string | number;
+  title: string;
+}
 
 const cardEmojiList = [
   {
-    id: 0, emoji: <Text style={styles.emojiText}>😇</Text>, title: 'like'
+    id: 0,
+    emoji: <Text>😇</Text>,
+    title: 'like',
   },
   {
-    id: 1, emoji: <Text style={styles.emojiText}>🥰</Text>, title: 'love'
+    id: 1,
+    emoji: <Text>🥰</Text>,
+    title: 'love',
   },
   {
-    id: 2, emoji: <Text style={styles.emojiText}>🙄</Text>, title: 'care'
+    id: 2,
+    emoji: <Text>🙄</Text>,
+    title: 'care',
   },
   {
-    id: 3, emoji: <Text style={styles.emojiText}>🤪</Text>, title: 'haha'
+    id: 3,
+    emoji: <Text>🤪</Text>,
+    title: 'haha',
   },
   {
-    id: 5, emoji: <Text style={styles.emojiText}>😇</Text>, title: 'sad'
+    id: 5,
+    emoji: <Text style={styles.emojiText}>😇</Text>,
+    title: 'sad',
   },
 ];
 
 const App = () => {
-  return <ReactionView items={cardEmojiList}>
-    <Text>React Native Reactions</Text>
-  </ReactionView>;
+  const [selectedEmoji, setSelectedEmoji] = useState<SelectedEmojiType>();
+
+  return (
+    <View style={styles.mainStyle}>
+      <ReactionView
+        items={cardEmojiList}
+        cardStyle={styles.cardStyle}
+        emojiStyle={styles.emojiText}
+        onTap={e => setSelectedEmoji(e)}>
+        <Text>React Native Reactions</Text>
+      </ReactionView>
+    </View>
+  );
 };
 
 export default App;
