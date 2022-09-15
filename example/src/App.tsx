@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { Text, View } from 'react-native';
 import { ReactionView } from 'react-native-reactions';
 import { styles } from './AppStyles';
-
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import 'react-native-gesture-handler'
 interface SelectedEmojiType {
   id: number;
   emoji: React.ReactNode | string | number;
@@ -21,9 +22,7 @@ const cardEmojiList = [
     title: 'love',
   },
   {
-    id: 2,
-    emoji: <Text>🙄</Text>,
-    title: 'care',
+    id: 2, emoji: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Twemoji_1f600.svg/1200px-Twemoji_1f600.svg.png', title: 'care'
   },
   {
     id: 3,
@@ -39,17 +38,17 @@ const cardEmojiList = [
 
 const App = () => {
   const [selectedEmoji, setSelectedEmoji] = useState<SelectedEmojiType>();
-
+  
   return (
-    <View style={styles.mainStyle}>
-      <ReactionView
-        items={cardEmojiList}
+    <GestureHandlerRootView style={styles.mainStyle}>
+      <ReactionView items={cardEmojiList} iconSize={20}
         cardStyle={styles.cardStyle}
         emojiStyle={styles.emojiText}
-        onTap={e => setSelectedEmoji(e)}>
+        onTap={e => setSelectedEmoji(e)}
+      >
         <Text>React Native Reactions</Text>
       </ReactionView>
-    </View>
+    </GestureHandlerRootView>
   );
 };
 

@@ -7,7 +7,7 @@ import {
   View,
 } from 'react-native';
 import { PanGestureHandler } from 'react-native-gesture-handler';
-import { useReaction } from '../../hooks';
+import { useReaction } from './hooks';
 import EmojiItem from '../EmojiItem';
 import styles from './styles';
 import type { EmojiItemProp, ReactionViewProps } from './types';
@@ -23,14 +23,23 @@ const ReactionsView = (props: ReactionViewProps) => {
     emojiKey,
   } = props;
   const [showPopUpCard, setShowPopUpCard] = useState(false);
-  const [viewHeight, setViewHeight] = useState<number>();
+  const [viewHeight, setViewHeight] = useState<number>(0);
 
-  const { onGesture, currentEmoji, setCurrentEmoji } = useReaction(props);
+  const {
+    onGesture,
+    currentEmoji,
+    setCurrentEmoji,
+    emojiSize,
+    showTopEmojiCard,
+    setMainViewY,
+  } = useReaction(props);
 
   const gestureEnded = () => {
     if (currentEmoji) {
       onTap(items?.[currentEmoji]);
     }
+    // When gesture ended
+    setMainViewY(0);
     setShowPopUpCard(false);
   };
 
@@ -41,14 +50,11 @@ const ReactionsView = (props: ReactionViewProps) => {
   };
 
   const onPressHandler = () => {
-    setCurrentEmoji(null);
+    setCurrentEmoji(0);
     setShowPopUpCard(!showPopUpCard);
   };
 
-  const container = StyleSheet.flatten([
-    styles.container,
-    { bottom: viewHeight },
-  ]);
+  const container = StyleSheet.flatten([styles.container]);
   const emojiBox = StyleSheet.flatten([styles.emojiBox, cardStyle]);
 
   return (
@@ -57,15 +63,23 @@ const ReactionsView = (props: ReactionViewProps) => {
         <Animated.View style={styles.root}>
           <View style={container}>
             {showPopUpCard && (
-              <View style={styles.subContainer}>
+              <View
+                style={[
+                  styles.subContainer,
+                  showTopEmojiCard
+                    ? { top: viewHeight + 10 }
+                    : { top: viewHeight - 80 },
+                ]}>
                 <View style={emojiBox}>
                   {items?.map((item, index) => (
                     <EmojiItem
                       onPress={() => emojiPressHandler(index, item)}
                       key={item?.title}
                       data={item}
-                      scaled={currentEmoji === index}
-                      {...{ emojiStyle, emojiKey }}
+                      currentPosition={currentEmoji}
+                      iconSize={emojiSize}
+                      showTopEmojiCard={showTopEmojiCard}
+                      {...{ emojiStyle, emojiKey, props }}
                     />
                   ))}
                 </View>

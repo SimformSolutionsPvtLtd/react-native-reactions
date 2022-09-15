@@ -4,8 +4,6 @@ import { Colors, moderateScale, verticalScale } from '../../theme';
 const styles = StyleSheet.create({
   main: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   container: {
     position: 'absolute',
