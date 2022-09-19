@@ -1,21 +1,24 @@
-import React from 'react';
+import React, { memo, useEffect } from 'react';
 import { Animated, Pressable, StyleSheet, Text } from 'react-native';
-import { verticalScale } from '../../theme';
+import { moderateScale, verticalScale } from '../../theme';
 import EmojiImage from '../EmojiImage';
 import { useEmojiItem } from './hooks';
 import styles from './styles';
 import type { emojiData, EmojiItemProps } from './types';
 import { isValidUrl } from '../../utils';
+import type { EmojiItemProp } from '../ReactionView/types';
 
 const EmojiButton = ({
   emojiData,
   emojiStyle,
   emojiKey = 'emoji',
+  iconSize = 28,
 }: emojiData) => {
   const emoji = emojiData?.[emojiKey];
   const isNumber: boolean = typeof emoji === 'number';
   const isValidEmement = React.isValidElement(emoji);
   const emojiElementStyle = StyleSheet.flatten([
+    { fontSize: moderateScale(iconSize) },
     emojiStyle,
     emoji?.props?.style ?? {},
   ]);
@@ -46,10 +49,12 @@ const EmojiItem = (props: EmojiItemProps) => {
     showTopEmojiCard,
     emojiKey,
     emojiStyle,
+    getSelectedEmoji,
+    iconSize,
     ...rest
   } = props;
 
-  const { titlePosition, onLayout, scaled } = useEmojiItem(props);
+  const { titlePosition, onLayout, scaled, childref } = useEmojiItem(props);
 
   const labelStyle = StyleSheet.flatten([
     styles.titleBox,
@@ -71,6 +76,15 @@ const EmojiItem = (props: EmojiItemProps) => {
     },
   ]);
 
+  useEffect(() => {
+    const getEmoji: EmojiItemProp | null = scaled ? data : null;
+
+    return () => {
+      getEmoji && getSelectedEmoji(getEmoji);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data, scaled]);
+
   return (
     <>
       {scaled && data?.title && (
@@ -79,16 +93,20 @@ const EmojiItem = (props: EmojiItemProps) => {
         </Animated.View>
       )}
       <Pressable
+        ref={childref}
         onPress={onPress}
         style={[styles.root, emojiContainerStyle]}
         onLayout={onLayout}
         {...rest}>
         <Animated.View style={emojiItemStyle}>
-          <EmojiButton emojiData={data} {...{ emojiStyle, emojiKey }} />
+          <EmojiButton
+            emojiData={data}
+            {...{ emojiStyle, emojiKey, iconSize }}
+          />
         </Animated.View>
       </Pressable>
     </>
   );
 };
 
-export default EmojiItem;
+export default memo(EmojiItem);

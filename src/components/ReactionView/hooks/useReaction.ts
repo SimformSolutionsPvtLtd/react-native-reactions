@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useWindowDimensions } from 'react-native';
 import type {
   GestureEvent,
   PanGestureHandlerEventPayload,
@@ -8,9 +9,18 @@ import type { ReactionViewProps } from '../types';
 
 const useReaction = (props: ReactionViewProps) => {
   const [currentEmoji, setCurrentEmoji] = useState<number>(0);
-  const { iconSize = 0 } = props;
+  const { iconSize = 25 } = props;
   const [emojiSize, setEmojiSize] = useState<number>(iconSize);
   const [mainViewY, setMainViewY] = useState<number>(0);
+  const [mainViewX, setMainViewX] = useState<number>(0);
+  const [mainViewWidth, setMainViewWidth] = useState<number>(0);
+  const { width } = useWindowDimensions();
+
+  const checkXPosition = width - mainViewX;
+
+  const mainViewWidthX = mainViewX + mainViewWidth;
+
+  const showCardPosition = width - mainViewWidthX < 100 ? -50 : 100;
 
   useEffect(() => {
     if (iconSize > GlobalConstants.max) {
@@ -25,15 +35,14 @@ const useReaction = (props: ReactionViewProps) => {
   const onGesture = async (
     event: GestureEvent<PanGestureHandlerEventPayload>
   ) => {
-    setMainViewY(c => c || event.nativeEvent.absoluteY);
-
     if (
       event.nativeEvent.absoluteY >= mainViewY - 80 &&
-      event.nativeEvent.absoluteY <= mainViewY + 50 &&
+      event.nativeEvent.absoluteY <= mainViewY + 70 &&
       event.nativeEvent.absoluteX >= 16 &&
       event.nativeEvent.absoluteX <= 367
     ) {
-      const currentItem = Math.floor(event.nativeEvent.x);
+      const currentItem = Math.floor(event.nativeEvent.absoluteX);
+
       if (currentItem) {
         setCurrentEmoji(currentItem);
       } else {
@@ -54,6 +63,11 @@ const useReaction = (props: ReactionViewProps) => {
     mainViewY,
     setMainViewY,
     showTopEmojiCard,
+    setMainViewX,
+    mainViewX,
+    checkXPosition,
+    showCardPosition,
+    setMainViewWidth,
   };
 };
 

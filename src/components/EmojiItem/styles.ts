@@ -9,7 +9,6 @@ const styles = StyleSheet.create({
   },
   titleBox: {
     position: 'absolute',
-    top: verticalScale(-40),
     backgroundColor: Colors.red,
     paddingVertical: verticalScale(4),
     borderRadius: 16,

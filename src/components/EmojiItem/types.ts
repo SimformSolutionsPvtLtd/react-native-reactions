@@ -1,4 +1,4 @@
-import type { ImageStyle, StyleProp, TextStyle, ViewStyle } from 'react-native';
+import type { StyleProp, TextStyle, ViewStyle } from 'react-native';
 import type { EmojiItemProp } from '../ReactionView/types';
 
 export interface EmojiItemProps extends emojiProps {
@@ -8,6 +8,7 @@ export interface EmojiItemProps extends emojiProps {
   showTopEmojiCard?: boolean;
   emojiStyle?: StyleProp<TextStyle>;
   emojiKey?: string;
+  getSelectedEmoji: (e: EmojiItemProp) => void;
 }
 
 export interface emojiData extends emojiProps {
@@ -15,16 +16,9 @@ export interface emojiData extends emojiProps {
   emojiStyle: StyleProp<TextStyle>;
   emojiKey?: string;
 }
-
-type imageProps = Omit<ImageStyle, 'width' | 'height'>;
-
-type textProps = Omit<TextStyle, 'fontSize'>;
-
 export interface emojiProps {
   iconSize?: number;
   titleStyle?: StyleProp<TextStyle>;
   titleBoxStyle?: StyleProp<ViewStyle>;
-  emojiImageStyle?: StyleProp<imageProps>;
-  emojiTextStyle?: StyleProp<textProps>;
   emojiContainerStyle?: StyleProp<ViewStyle>;
 }
