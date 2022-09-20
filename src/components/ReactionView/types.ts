@@ -14,7 +14,11 @@ export interface ReactionViewProps extends emojiProps {
   emojiStyle?: StyleProp<TextStyle>;
   touchableProps?: TouchableOpacityProps;
   emojiKey?: string;
+  opacityRange?: number[];
   itemIndex?: number;
+  cardDuration?: number;
+  emojiDuration?: number;
+  scaleDuration?: number;
 }
 
 export interface EmojiItemProp {

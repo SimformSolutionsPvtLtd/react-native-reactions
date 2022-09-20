@@ -7,7 +7,6 @@ const useEmojiItem = (props: EmojiItemProps) => {
 
   const [xValue, setXValue] = useState<number>(0);
   const [titlePosition, setTitlePosition] = useState<number>(0);
-
   const childref = useRef<View | null>(null);
 
   const onLayout = (e: LayoutChangeEvent) => {
@@ -22,7 +21,7 @@ const useEmojiItem = (props: EmojiItemProps) => {
   };
 
   const scaled: boolean =
-    currentPosition > xValue && currentPosition < xValue + 20;
+    currentPosition > xValue && currentPosition < xValue + 30;
   return { onLayout, titlePosition, xValue, scaled, childref };
 };
 

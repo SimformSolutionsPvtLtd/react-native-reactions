@@ -1,12 +1,12 @@
-import React, { memo, useEffect } from 'react';
+import React, { memo, useEffect, useRef } from 'react';
 import { Animated, Pressable, StyleSheet, Text } from 'react-native';
 import { moderateScale, verticalScale } from '../../theme';
+import { isValidUrl } from '../../utils';
 import EmojiImage from '../EmojiImage';
+import type { EmojiItemProp } from '../ReactionView/types';
 import { useEmojiItem } from './hooks';
 import styles from './styles';
 import type { emojiData, EmojiItemProps } from './types';
-import { isValidUrl } from '../../utils';
-import type { EmojiItemProp } from '../ReactionView/types';
 
 const EmojiButton = ({
   emojiData,
@@ -43,6 +43,7 @@ const EmojiItem = (props: EmojiItemProps) => {
   const {
     data,
     onPress,
+    iconSize = 28,
     titleStyle,
     titleBoxStyle,
     emojiContainerStyle,
@@ -50,30 +51,108 @@ const EmojiItem = (props: EmojiItemProps) => {
     emojiKey,
     emojiStyle,
     getSelectedEmoji,
-    iconSize,
+    index,
+    showPopUpCard,
+    emojiDuration = 800,
+    scaleDuration = 200,
     ...rest
   } = props;
 
   const { titlePosition, onLayout, scaled, childref } = useEmojiItem(props);
+  const scaleEmoji = useRef(new Animated.Value(0)).current;
+  const waveAnim = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    Animated.timing(scaleEmoji, {
+      toValue: scaled ? 2 : 1,
+      duration: scaleDuration,
+      useNativeDriver: true,
+    }).start();
+  }, [emojiDuration, scaleDuration, scaleEmoji, scaled]);
+
+  useEffect(() => {
+    Animated.loop(
+      Animated.sequence([
+        Animated.delay(index * 100),
+        Animated.timing(waveAnim, {
+          toValue: showPopUpCard ? 1 : 0,
+          duration: emojiDuration,
+          useNativeDriver: true,
+        }),
+      ]),
+      {
+        iterations: 1,
+      }
+    ).start();
+  }, [waveAnim, index, showPopUpCard, emojiDuration]);
+
+  const emojiAnimatedScaled = {
+    transform: [
+      {
+        translateY: scaleEmoji.interpolate({
+          inputRange: [0, 1, 2],
+          outputRange: scaled ? [0, 0, -5] : [0, 0, 1],
+        }),
+      },
+      {
+        scaleY: scaleEmoji.interpolate({
+          inputRange: [0, 1, 2],
+          outputRange: scaled ? [0, 0, 1.5] : [1, 1, 1],
+        }),
+      },
+      {
+        scaleX: scaleEmoji.interpolate({
+          inputRange: [0, 1, 2],
+          outputRange: scaled ? [0, 0, 1.5] : [1, 1, 1],
+        }),
+      },
+    ],
+  };
+
+  const wavedEmoji = {
+    opacity: waveAnim.interpolate({
+      inputRange: [0, 0.5, 1],
+      outputRange: [0, 0.5, 1],
+    }),
+    transform: [
+      {
+        translateY: waveAnim.interpolate({
+          inputRange: [0, 0.5, 1],
+          outputRange: showPopUpCard ? [100, -20, 0] : [0, 100, -index * 5],
+        }),
+      },
+      {
+        scale: waveAnim.interpolate({
+          inputRange: [0, 0.5, 1],
+          outputRange: showPopUpCard ? [0.5, 0.5, 1] : [1, 1, 0.5],
+        }),
+      },
+    ],
+  };
 
   const labelStyle = StyleSheet.flatten([
     styles.titleBox,
     {
       transform: [
-        { scale: scaled ? 1.0 : 0 },
-        { translateX: titlePosition },
-        { perspective: 1000 },
+        {
+          translateY: scaleEmoji.interpolate({
+            inputRange: [0, 1, 4],
+            outputRange: scaled ? [0, 0, 5] : [0, 0, 0],
+          }),
+        },
+        {
+          translateX: scaleEmoji.interpolate({
+            inputRange: [0, 1, 4],
+            outputRange: scaled ? [0, titlePosition, titlePosition] : [0, 0, 0],
+          }),
+        },
+        { scale: scaled ? 1.5 : 1 },
       ],
-      opacity: scaled ? 1.0 : 0,
-      top: showTopEmojiCard ? verticalScale(60) : verticalScale(-30),
+    },
+    {
+      top: showTopEmojiCard ? verticalScale(90) : verticalScale(-iconSize - 30),
     },
     titleBoxStyle,
-  ]);
-
-  const emojiItemStyle = StyleSheet.flatten([
-    {
-      transform: [{ scale: scaled ? 1.5 : 1 }, { perspective: 1000 }],
-    },
   ]);
 
   useEffect(() => {
@@ -85,23 +164,30 @@ const EmojiItem = (props: EmojiItemProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, scaled]);
 
+  const emojiLableStyle = StyleSheet.flatten([styles.title, titleStyle]);
+  const pressableStyle = StyleSheet.flatten([styles.root, emojiContainerStyle]);
+
   return (
     <>
       {scaled && data?.title && (
         <Animated.View style={labelStyle}>
-          <Text style={[styles.title, titleStyle]}>{data?.title}</Text>
+          <Text style={emojiLableStyle}>{data?.title}</Text>
         </Animated.View>
       )}
       <Pressable
         ref={childref}
         onPress={onPress}
-        style={[styles.root, emojiContainerStyle]}
+        style={pressableStyle}
         onLayout={onLayout}
         {...rest}>
-        <Animated.View style={emojiItemStyle}>
+        <Animated.View style={scaled ? emojiAnimatedScaled : wavedEmoji}>
           <EmojiButton
             emojiData={data}
-            {...{ emojiStyle, emojiKey, iconSize }}
+            {...{
+              emojiStyle,
+              emojiKey,
+              iconSize,
+            }}
           />
         </Animated.View>
       </Pressable>

@@ -16,10 +16,20 @@ exports[`ReactionsView component Match Snapshot 1`] = `
     onEnded={[Function]}
     onGestureEvent={[Function]}
   >
-    <View
-      collapsable={false}
-      style={Object {}}
-    >
+    <View>
+      <View
+        collapsable={false}
+        style={
+          Object {
+            "opacity": 0,
+            "transform": Array [
+              Object {
+                "translateY": 0,
+              },
+            ],
+          }
+        }
+      />
       <View
         accessible={true}
         collapsable={false}

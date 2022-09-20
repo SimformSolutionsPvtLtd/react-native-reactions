@@ -8,7 +8,11 @@ export interface EmojiItemProps extends emojiProps {
   showTopEmojiCard?: boolean;
   emojiStyle?: StyleProp<TextStyle>;
   emojiKey?: string;
+  index: number;
   getSelectedEmoji: (e: EmojiItemProp) => void;
+  showPopUpCard: boolean;
+  emojiDuration?: number;
+  scaleDuration?: number;
 }
 
 export interface emojiData extends emojiProps {

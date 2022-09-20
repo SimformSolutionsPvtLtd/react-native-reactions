@@ -42,7 +42,6 @@ const useReaction = (props: ReactionViewProps) => {
       event.nativeEvent.absoluteX <= 367
     ) {
       const currentItem = Math.floor(event.nativeEvent.absoluteX);
-
       if (currentItem) {
         setCurrentEmoji(currentItem);
       } else {

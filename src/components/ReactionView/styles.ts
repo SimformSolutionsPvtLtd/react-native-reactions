@@ -2,8 +2,12 @@ import { StyleSheet } from 'react-native';
 import { Colors, moderateScale, verticalScale } from '../../theme';
 
 const styles = StyleSheet.create({
+  root: {
+    zIndex: 11,
+  },
   subContainer: {
     position: 'absolute',
+    bottom: 0,
     right: 0,
     zIndex: 10,
     height: verticalScale(80),
