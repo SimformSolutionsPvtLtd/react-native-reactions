@@ -4,9 +4,12 @@ exports[`ReactionsView component Match Snapshot 1`] = `
 <RCTSafeAreaView
   emulateUnlessSupported={true}
   style={
-    Object {
-      "flex": 1,
-    }
+    Array [
+      Object {
+        "elevation": -0,
+        "zIndex": -0,
+      },
+    ]
   }
 >
   <View
@@ -15,19 +18,8 @@ exports[`ReactionsView component Match Snapshot 1`] = `
   >
     <View
       collapsable={false}
-      style={
-        Object {
-          "zIndex": 11,
-        }
-      }
+      style={Object {}}
     >
-      <View
-        style={
-          Object {
-            "position": "absolute",
-          }
-        }
-      />
       <View
         accessible={true}
         collapsable={false}

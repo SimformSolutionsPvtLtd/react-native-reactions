@@ -2,23 +2,17 @@ import { StyleSheet } from 'react-native';
 import { Colors, moderateScale, verticalScale } from '../../theme';
 
 const styles = StyleSheet.create({
-  main: {
-    flex: 1,
-  },
-  container: {
-    position: 'absolute',
-  },
-  root: {
-    zIndex: 11,
-  },
   subContainer: {
+    position: 'absolute',
+    right: 0,
     zIndex: 10,
+    height: verticalScale(80),
+    alignItems: 'center',
   },
   emojiBox: {
     flexDirection: 'row',
-    bottom: moderateScale(5),
     padding: moderateScale(9),
-    backgroundColor: Colors.blue,
+    backgroundColor: Colors.white,
     borderRadius: 30,
     shadowColor: Colors.black,
     shadowOffset: {
