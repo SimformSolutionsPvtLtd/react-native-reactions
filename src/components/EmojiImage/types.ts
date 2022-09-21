@@ -5,4 +5,5 @@ export type ImageProps = {
 };
 export interface EmojiImageType extends ImageProps {
   emojiElementStyle: StyleProp<ImageStyle>;
+  iconSize?: number;
 }

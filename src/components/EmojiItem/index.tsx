@@ -30,7 +30,7 @@ const EmojiButton = ({
   } else if (isValidUrl(emoji as string) || isNumber) {
     return (
       <EmojiImage
-        {...{ emojiElementStyle }}
+        {...{ emojiElementStyle, iconSize }}
         source={isNumber ? (emoji as number) : { uri: emoji as string }}
       />
     );

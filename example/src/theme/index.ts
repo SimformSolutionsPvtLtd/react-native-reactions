@@ -1,4 +1,4 @@
 import Colors from './Colors';
-import { moderateScale } from './Metrics';
+import { scale, moderateScale, verticalScale } from './Metrics';
 
-export { Colors, moderateScale };
+export { Colors, scale, moderateScale, verticalScale };
