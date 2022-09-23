@@ -1,12 +1,12 @@
 import React, { memo, useEffect } from 'react';
 import { Animated, Pressable, StyleSheet, Text } from 'react-native';
 import { moderateScale, verticalScale } from '../../theme';
+import { isValidUrl } from '../../utils';
 import EmojiImage from '../EmojiImage';
+import type { EmojiItemProp } from '../ReactionView/types';
 import { useEmojiItem } from './hooks';
 import styles from './styles';
 import type { emojiData, EmojiItemProps } from './types';
-import { isValidUrl } from '../../utils';
-import type { EmojiItemProp } from '../ReactionView/types';
 
 const EmojiButton = ({
   emojiData,
@@ -49,12 +49,24 @@ const EmojiItem = (props: EmojiItemProps) => {
     showTopEmojiCard,
     emojiKey,
     emojiStyle,
-    getSelectedEmoji,
     iconSize,
-    ...rest
+    isTouchRelease,
+    isModal = true,
+    setShowPopUpCard = () => {},
+    onTap = () => {},
+    loaded,
+    onEmojiCloseModal = () => {},
+    setTouchRelease = () => {},
   } = props;
 
-  const { titlePosition, onLayout, scaled, childref } = useEmojiItem(props);
+  const {
+    titlePosition,
+    onLayout,
+    scaled,
+    childref,
+    emojiAnimatedScaled,
+    wavedEmoji,
+  } = useEmojiItem(props);
 
   const labelStyle = StyleSheet.flatten([
     styles.titleBox,
@@ -65,25 +77,21 @@ const EmojiItem = (props: EmojiItemProps) => {
         { perspective: 1000 },
       ],
       opacity: scaled ? 1.0 : 0,
-      top: showTopEmojiCard ? verticalScale(60) : verticalScale(-30),
+      top: showTopEmojiCard ? verticalScale(-30) : verticalScale(70),
     },
     titleBoxStyle,
   ]);
 
-  const emojiItemStyle = StyleSheet.flatten([
-    {
-      transform: [{ scale: scaled ? 1.5 : 1 }, { perspective: 1000 }],
-    },
-  ]);
-
   useEffect(() => {
     const getEmoji: EmojiItemProp | null = scaled ? data : null;
+    isTouchRelease && (isModal ? onEmojiCloseModal() : setShowPopUpCard(false));
 
     return () => {
-      getEmoji && getSelectedEmoji(getEmoji);
+      isTouchRelease && getEmoji && onTap(getEmoji);
+      setTouchRelease(false);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data, scaled]);
+  }, [data, scaled, isTouchRelease]);
 
   return (
     <>
@@ -96,9 +104,8 @@ const EmojiItem = (props: EmojiItemProps) => {
         ref={childref}
         onPress={onPress}
         style={[styles.root, emojiContainerStyle]}
-        onLayout={onLayout}
-        {...rest}>
-        <Animated.View style={emojiItemStyle}>
+        onLayout={onLayout}>
+        <Animated.View style={loaded ? emojiAnimatedScaled : wavedEmoji}>
           <EmojiButton
             emojiData={data}
             {...{ emojiStyle, emojiKey, iconSize }}

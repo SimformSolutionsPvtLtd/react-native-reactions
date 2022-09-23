@@ -16,11 +16,9 @@ const useReaction = (props: ReactionViewProps) => {
   const [mainViewWidth, setMainViewWidth] = useState<number>(0);
   const { width } = useWindowDimensions();
 
-  const checkXPosition = width - mainViewX;
-
   const mainViewWidthX = mainViewX + mainViewWidth;
 
-  const showCardPosition = width - mainViewWidthX < 100 ? -50 : 100;
+  const showCardPosition = width - mainViewWidthX < 100 ? -70 : 100;
 
   useEffect(() => {
     if (iconSize > GlobalConstants.max) {
@@ -65,7 +63,6 @@ const useReaction = (props: ReactionViewProps) => {
     showTopEmojiCard,
     setMainViewX,
     mainViewX,
-    checkXPosition,
     showCardPosition,
     setMainViewWidth,
   };

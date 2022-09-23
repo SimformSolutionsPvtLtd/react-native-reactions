@@ -7,6 +7,7 @@ import type {
 import type { emojiProps } from '../EmojiItem/types';
 
 export interface ReactionViewProps extends emojiProps {
+  type?: 'default' | 'modal';
   children: JSX.Element;
   items?: EmojiItemProp[];
   onTap?: (e: EmojiItemProp | undefined) => void;
@@ -15,6 +16,7 @@ export interface ReactionViewProps extends emojiProps {
   touchableProps?: TouchableOpacityProps;
   emojiKey?: string;
   itemIndex?: number;
+  isCardOpen?: (isCardOpenType?: boolean) => void;
 }
 
 export interface EmojiItemProp {
