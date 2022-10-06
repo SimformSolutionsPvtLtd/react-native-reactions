@@ -3,6 +3,7 @@ export interface ModalProps {
   y?: number;
   contentHeight?: number;
   width?: number;
+  emojiSize?: number;
 }
 
 export interface RefProps {

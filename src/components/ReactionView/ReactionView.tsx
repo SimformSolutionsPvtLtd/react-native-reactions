@@ -19,6 +19,7 @@ const ReactionsView = (props: ReactionViewProps) => {
     showCardPosition,
     setMainViewWidth,
     mainViewY,
+    emojiSize,
   } = useReaction(props);
 
   const onPressHandler = () => {
@@ -64,6 +65,7 @@ const ReactionsView = (props: ReactionViewProps) => {
               isModal: false,
               setShowPopUpCard,
               showPopUpCard,
+              emojiSize,
               ...props,
             }}
           />

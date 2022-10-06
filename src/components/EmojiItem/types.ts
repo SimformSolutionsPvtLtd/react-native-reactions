@@ -19,12 +19,14 @@ export interface EmojiItemProps extends emojiProps {
   scaleDuration?: number;
   onEmojiCloseModal?: () => void;
   setTouchRelease?: (e: boolean) => void;
+  emojiSize?: number;
 }
 
 export interface emojiData extends emojiProps {
   emojiData: EmojiItemProp;
   emojiStyle: StyleProp<TextStyle>;
   emojiKey?: string;
+  emojiSize?: number;
 }
 export interface emojiProps {
   iconSize?: number;
