@@ -10,13 +10,13 @@ export const CardEmojiList = [
         id: 2, emoji: '🤪', title: 'care'
     },
     {
-        id: 3, emoji: '🤪', title: 'haha'
+        id: 3, emoji: '😘', title: 'kiss'
     },
     {
-        id: 4, emoji: 'https://cdn-icons-png.flaticon.com/128/742/742751.png', title: 'enjoy'
+        id: 4, emoji: '😂', title: 'laught'
     },
     {
-        id: 5, emoji: '🤪', title: 'cares'
+        id: 5, emoji: '😎', title: 'cool'
     },
 ];
 

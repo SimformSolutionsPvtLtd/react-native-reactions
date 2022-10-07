@@ -1,23 +1,22 @@
 import React from 'react';
 import { SafeAreaView } from 'react-native';
-import { FlatList } from 'react-native-reactions';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { FlatList, ReactionProvider } from 'react-native-reactions';
 import { Card } from './component';
 import { styles } from './AppStyles'
 import { Colors } from './theme';
 import { PostItemList } from './constants';
 
 const App = () => (
-  <GestureHandlerRootView style={styles.mainStyle}>
-    <SafeAreaView style={styles.mainStyle}>
+  <SafeAreaView style={styles.mainStyle}>
+    <ReactionProvider>
       <FlatList
         data={PostItemList}
         style={{ backgroundColor: Colors.linkWater }}
         renderItem={({ index }) => <Card index={index} />}
-        keyExtractor={(item) => item.id}
+        keyExtractor={item => item.id}
       />
-    </SafeAreaView>
-  </GestureHandlerRootView>
+    </ReactionProvider>
+  </SafeAreaView>
 );
 
 export default App;

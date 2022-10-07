@@ -8,7 +8,17 @@ export interface EmojiItemProps extends emojiProps {
   showTopEmojiCard?: boolean;
   emojiStyle?: StyleProp<TextStyle>;
   emojiKey?: string;
-  getSelectedEmoji: (e: EmojiItemProp) => void;
+  isModal?: boolean;
+  isTouchRelease?: boolean;
+  setShowPopUpCard?: (e: boolean) => void;
+  onTap?: (e: EmojiItemProp | undefined) => void;
+  loaded?: boolean;
+  index: number;
+  showPopUpCard?: boolean;
+  emojiDuration?: number;
+  scaleDuration?: number;
+  onEmojiCloseModal?: () => void;
+  setTouchRelease?: (e: boolean) => void;
 }
 
 export interface emojiData extends emojiProps {

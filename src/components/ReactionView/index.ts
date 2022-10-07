@@ -1,4 +1,4 @@
-import ReactionView from './ReactionView';
+import RootReaction from './RootReaction';
 
-export { ReactionView };
+export { RootReaction as Reaction };
 export type { ReactionViewProps } from './types';
