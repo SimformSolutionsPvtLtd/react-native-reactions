@@ -1,5 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
-import { Animated, LayoutChangeEvent, View } from 'react-native';
+import type { LayoutChangeEvent, View } from 'react-native';
+import {
+  interpolate,
+  useAnimatedStyle,
+  useSharedValue,
+  withDelay,
+  withTiming,
+} from 'react-native-reanimated';
 import type { EmojiItemProps } from '../types';
 
 const useEmojiItem = (props: EmojiItemProps) => {
@@ -7,96 +14,95 @@ const useEmojiItem = (props: EmojiItemProps) => {
     currentPosition = 0,
     index,
     showPopUpCard,
-    emojiDuration = 400,
-    scaleDuration = 200,
+    emojiDuration = 200,
+    scaleDuration = 100,
   } = props;
 
-  const scaleEmoji = useRef(new Animated.Value(0)).current;
-  const waveAnim = useRef(new Animated.Value(0)).current;
   const [xValue, setXValue] = useState<number>(0);
   const [titlePosition, setTitlePosition] = useState<number>(0);
   const scaled: boolean =
     currentPosition > xValue && currentPosition < xValue + 30;
+  const scaleEmoji = useSharedValue(0);
+  const waveAnim = useSharedValue(0);
 
   useEffect(() => {
-    Animated.timing(scaleEmoji, {
-      toValue: scaled ? 2 : 1,
-      duration: scaleDuration,
-      useNativeDriver: true,
-    }).start();
-  }, [emojiDuration, scaleDuration, scaleEmoji, scaled]);
-
-  useEffect(() => {
-    Animated.loop(
-      Animated.sequence([
-        Animated.delay(index * 100),
-        Animated.timing(waveAnim, {
-          toValue: showPopUpCard ? 1 : 0,
-          duration: emojiDuration,
-          useNativeDriver: true,
-        }),
-      ]),
-      {
-        iterations: 1,
-      }
-    ).start();
+    waveAnim.value = withDelay(
+      index * 40,
+      withTiming(showPopUpCard ? 1 : 0, {
+        duration: emojiDuration,
+      })
+    );
   }, [waveAnim, index, showPopUpCard, emojiDuration]);
 
   const childref = useRef<View | null>(null);
 
   const onLayout = (e: LayoutChangeEvent) => {
-    childref?.current &&
-      childref?.current.measureInWindow((x: number) => {
-        setXValue(x);
-      });
+    setTimeout(() => {
+      childref?.current &&
+        childref?.current.measureInWindow((x: number) => {
+          setXValue(x);
+        });
+    }, 100);
     setTitlePosition(e.nativeEvent.layout.x - 4);
   };
 
   const reverseEnim = (scaleEmoji as any)._value === 2 ? [2, 1, 0] : [0, 1, 2];
 
-  const emojiAnimatedScaled = {
-    transform: [
-      {
-        translateY: scaleEmoji.interpolate({
-          inputRange: [0, 1, 2],
-          outputRange: scaled ? [1, -3, -5] : [1, 1, 1],
-        }),
-      },
-      {
-        scaleY: scaleEmoji.interpolate({
-          inputRange: [0, 1, 2],
-          outputRange: scaled ? [0, 1, 1.5] : reverseEnim,
-        }),
-      },
-      {
-        scaleX: scaleEmoji.interpolate({
-          inputRange: [0, 1, 2],
-          outputRange: scaled ? [0, 1, 1.5] : reverseEnim,
-        }),
-      },
-    ],
-  };
+  useEffect(() => {
+    scaleEmoji.value = withTiming(scaled ? 2 : 1, {
+      duration: scaleDuration,
+    });
+  }, [emojiDuration, scaleDuration, scaleEmoji, scaled]);
 
-  const wavedEmoji = {
-    opacity: waveAnim.interpolate({
-      inputRange: [0, 0.5, 1],
-      outputRange: [0, 0.5, 1],
-    }),
-    transform: [
-      {
-        translateY: waveAnim.interpolate({
-          inputRange: [0, 0.5, 1],
-          outputRange: showPopUpCard ? [15, 10, 0] : [0, 10, -index * 4],
-        }),
-      },
-      {
-        scale: waveAnim.interpolate({
-          inputRange: [0, 0.5, 1],
-          outputRange: showPopUpCard ? [0.5, 0.5, 1] : [1, 1, 0.5],
-        }),
-      },
-    ],
-  };
+  const emojiAnimatedScaled = useAnimatedStyle(() => {
+    return {
+      transform: [
+        {
+          translateY: interpolate(
+            scaleEmoji.value,
+            [0, 1, 2],
+            scaled ? [1, -3, -5] : [1, 1, 1]
+          ),
+        },
+        {
+          scaleY: interpolate(
+            scaleEmoji.value,
+            [0, 1, 2],
+            scaled ? [0, 1, 1.5] : reverseEnim
+          ),
+        },
+        {
+          scaleX: interpolate(
+            scaleEmoji.value,
+            [0, 1, 2],
+            scaled ? [0, 1, 1.5] : reverseEnim
+          ),
+        },
+      ],
+    };
+  }, [emojiDuration, scaleDuration, scaleEmoji, scaled]);
+
+  const wavedEmoji = useAnimatedStyle(() => {
+    return {
+      opacity: interpolate(waveAnim.value, [0, 0.5, 1], [0, 0.5, 1]),
+      transform: [
+        {
+          translateY: interpolate(
+            waveAnim.value,
+            [0, 0.5, 1],
+            showPopUpCard ? [15, 10, 0] : [0, 10, -index * 4]
+          ),
+        },
+        {
+          scale: interpolate(
+            waveAnim.value,
+            [0, 0.5, 1],
+            showPopUpCard ? [0.5, 0.5, 1] : [1, 1, 0.5]
+          ),
+        },
+      ],
+    };
+  });
 
   return {
     onLayout,
