@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
 import {
-  Animated,
   PanResponder,
   StyleSheet,
   useWindowDimensions,
@@ -9,6 +8,12 @@ import {
 import type { EmojiItemProp } from '../../ReactionView/types';
 import { GlobalConstants } from '../../../constants';
 import type { EmojiModalProps } from '../types';
+import {
+  interpolate,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from 'react-native-reanimated';
 
 const useEmojiView = (props: EmojiModalProps) => {
   const {
@@ -29,7 +34,7 @@ const useEmojiView = (props: EmojiModalProps) => {
   const { iconSize = 25 } = props;
   const [emojiSize, setEmojiSize] = useState<number>(iconSize);
   const { width, height } = useWindowDimensions();
-  const cardAnim = useRef(new Animated.Value(0)).current;
+  const cardAnim = useSharedValue(0);
 
   // get child component position to how far is the end of x
   const mainViewWidthX = width - (x + mainViewWidth);
@@ -39,7 +44,7 @@ const useEmojiView = (props: EmojiModalProps) => {
     mainViewWidthX > width / 4 && mainViewWidthX < width / 2;
 
   // set card position based on child component
-  const showCardPosition = x < 100 ? x + emojiSize : width / (emojiSize / 6);
+  const showCardPosition = x < 100 ? x + 5 : width / (emojiSize / 8);
 
   useEffect(() => {
     isCardOpen(showPopUpCard);
@@ -60,13 +65,10 @@ const useEmojiView = (props: EmojiModalProps) => {
   }, [iconSize]);
 
   useEffect(() => {
-    Animated.timing(cardAnim, {
-      toValue: showPopUpCard ? 1 : 0,
+    cardAnim.value = withTiming(showPopUpCard ? 1 : 0, {
       duration: cardDuration,
-      useNativeDriver: true,
-    }).start();
+    });
   }, [cardAnim, cardDuration, showPopUpCard]);
-
   const panResponder = useRef(
     PanResponder.create({
       onMoveShouldSetPanResponder: () => true,
@@ -108,23 +110,27 @@ const useEmojiView = (props: EmojiModalProps) => {
 
   const outputRangeModal = y > 150 ? [0, y - 50, y - 70] : [0, y + 10, y + 30];
 
-  const container = {
-    opacity: cardAnim.interpolate({
-      inputRange: [0, 0.5, 1],
-      outputRange: opacityRange ? opacityRange : [0, 0, 1],
-    }),
-    transform: [
-      {
-        translateY: cardAnim.interpolate({
-          inputRange: [0, 0.5, 1],
-          outputRange: isModal ? outputRangeModal : outputRange,
-        }),
-      },
-      {
-        translateX: isModal ? (showCardInCenter ? 0 : showCardPosition) : 0,
-      },
-    ],
-  };
+  const container = useAnimatedStyle(() => {
+    return {
+      opacity: interpolate(
+        cardAnim.value,
+        [0, 0.5, 1],
+        opacityRange ? opacityRange : [0, 0, 1]
+      ),
+      transform: [
+        {
+          translateY: interpolate(
+            cardAnim.value,
+            [0, 0.5, 1],
+            isModal ? outputRangeModal : outputRange
+          ),
+        },
+        {
+          translateX: isModal ? (showCardInCenter ? 0 : showCardPosition) : 0,
+        },
+      ],
+    };
+  });
 
   const hitSlopHeigth = showPopUpCard ? height : 0;
   const hitSlopWidth = showPopUpCard ? width : 0;

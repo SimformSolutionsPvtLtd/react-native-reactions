@@ -1,5 +1,5 @@
 import React, { memo, useEffect } from 'react';
-import { Animated, Pressable, StyleSheet, Text } from 'react-native';
+import { Pressable, StyleSheet, Text } from 'react-native';
 import { moderateScale, verticalScale } from '../../theme';
 import { isValidUrl } from '../../utils';
 import EmojiImage from '../EmojiImage';
@@ -7,6 +7,7 @@ import type { EmojiItemProp } from '../ReactionView/types';
 import { useEmojiItem } from './hooks';
 import styles from './styles';
 import type { emojiData, EmojiItemProps } from './types';
+import Animated from 'react-native-reanimated';
 
 const EmojiButton = ({
   emojiData,

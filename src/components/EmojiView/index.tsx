@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Animated, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import EmojiItem from '../EmojiItem';
 import { useEmojiView } from './hooks';
 import { styles } from './style';
 import type { EmojiModalProps } from './types';
+import Animated from 'react-native-reanimated';
 
 const EmojiView = ({
   onStartShouldSetResponder,
