@@ -39,7 +39,7 @@ const useEmojiView = (props: EmojiModalProps) => {
     mainViewWidthX > width / 4 && mainViewWidthX < width / 2;
 
   // set card position based on child component
-  const showCardPosition = mainViewWidthX < 100 ? width / 3 : x;
+  const showCardPosition = x < 100 ? x + emojiSize : width / (emojiSize / 6);
 
   useEffect(() => {
     isCardOpen(showPopUpCard);

@@ -12,13 +12,13 @@ const EmojiButton = ({
   emojiData,
   emojiStyle,
   emojiKey = 'emoji',
-  iconSize = 28,
+  emojiSize = 28,
 }: emojiData) => {
   const emoji = emojiData?.[emojiKey];
   const isNumber: boolean = typeof emoji === 'number';
   const isValidEmement = React.isValidElement(emoji);
   const emojiElementStyle = StyleSheet.flatten([
-    { fontSize: moderateScale(iconSize) },
+    { fontSize: moderateScale(emojiSize) },
     emojiStyle,
     emoji?.props?.style ?? {},
   ]);
@@ -30,7 +30,7 @@ const EmojiButton = ({
   } else if (isValidUrl(emoji as string) || isNumber) {
     return (
       <EmojiImage
-        {...{ emojiElementStyle, iconSize }}
+        {...{ emojiElementStyle, emojiSize }}
         source={isNumber ? (emoji as number) : { uri: emoji as string }}
       />
     );
@@ -49,7 +49,7 @@ const EmojiItem = (props: EmojiItemProps) => {
     showTopEmojiCard,
     emojiKey,
     emojiStyle,
-    iconSize,
+    emojiSize,
     isTouchRelease,
     isModal = true,
     setShowPopUpCard = () => {},
@@ -108,7 +108,7 @@ const EmojiItem = (props: EmojiItemProps) => {
         <Animated.View style={loaded ? emojiAnimatedScaled : wavedEmoji}>
           <EmojiButton
             emojiData={data}
-            {...{ emojiStyle, emojiKey, iconSize }}
+            {...{ emojiStyle, emojiKey, emojiSize }}
           />
         </Animated.View>
       </Pressable>

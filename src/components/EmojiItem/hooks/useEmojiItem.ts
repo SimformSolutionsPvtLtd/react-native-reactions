@@ -7,7 +7,7 @@ const useEmojiItem = (props: EmojiItemProps) => {
     currentPosition = 0,
     index,
     showPopUpCard,
-    emojiDuration = 500,
+    emojiDuration = 400,
     scaleDuration = 200,
   } = props;
 
@@ -49,10 +49,7 @@ const useEmojiItem = (props: EmojiItemProps) => {
       childref?.current.measureInWindow((x: number) => {
         setXValue(x);
       });
-
-    const value = Math.floor(e.nativeEvent.layout.x);
     setTitlePosition(e.nativeEvent.layout.x - 4);
-    setXValue(value);
   };
 
   const reverseEnim = (scaleEmoji as any)._value === 2 ? [2, 1, 0] : [0, 1, 2];
