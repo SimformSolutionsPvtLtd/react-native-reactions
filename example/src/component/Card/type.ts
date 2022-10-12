@@ -9,5 +9,5 @@ export interface EmojiItemProp {
 export interface CardProps {
   index: number;
   selectedEmoji?:EmojiItemProp
-   setSelectedEmoji?:(e:EmojiItemProp | undefined)=>void
+  setSelectedEmoji?:(e:EmojiItemProp | undefined)=>void
 }

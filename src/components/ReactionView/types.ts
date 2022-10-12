@@ -16,7 +16,12 @@ export interface ReactionViewProps extends emojiProps {
   touchableProps?: TouchableOpacityProps;
   emojiKey?: string;
   itemIndex?: number;
-  isCardOpen?: (isCardOpenType?: boolean) => void;
+  onShowDismissCard?: (onShowDismissCardType?: boolean) => void;
+  isShowCardInCenter?: boolean;
+  variant?: 'default' | 'onPress' | 'onLongPress';
+  onPress?: () => void;
+  disabled?: boolean;
+  onLongPress?: () => void;
 }
 
 export interface EmojiItemProp {

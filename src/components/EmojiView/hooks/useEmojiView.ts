@@ -27,7 +27,8 @@ const useEmojiView = (props: EmojiModalProps) => {
     cardDuration = 400,
     opacityRange,
     onEmojiCloseModal = () => {},
-    isCardOpen = () => {},
+    onShowDismissCard = () => {},
+    isShowCardInCenter = false,
   } = props;
 
   const [currentEmoji, setCurrentEmoji] = useState<number>(0);
@@ -47,8 +48,8 @@ const useEmojiView = (props: EmojiModalProps) => {
   const showCardPosition = x < 100 ? x + 5 : width / (emojiSize / 8);
 
   useEffect(() => {
-    isCardOpen(showPopUpCard);
-  }, [isCardOpen, showPopUpCard]);
+    onShowDismissCard(showPopUpCard);
+  }, [onShowDismissCard, showPopUpCard]);
 
   useEffect(() => {
     return () => setCurrentEmoji(0);
@@ -94,7 +95,8 @@ const useEmojiView = (props: EmojiModalProps) => {
 
   const subContainer = StyleSheet.create([
     {
-      alignItems: showCardInCenter ? 'center' : 'baseline',
+      alignItems:
+        showCardInCenter || isShowCardInCenter ? 'center' : 'baseline',
     },
   ]);
 
@@ -126,7 +128,11 @@ const useEmojiView = (props: EmojiModalProps) => {
           ),
         },
         {
-          translateX: isModal ? (showCardInCenter ? 0 : showCardPosition) : 0,
+          translateX: isModal
+            ? showCardInCenter || isShowCardInCenter
+              ? 0
+              : showCardPosition
+            : 0,
         },
       ],
     };

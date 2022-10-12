@@ -5,11 +5,17 @@ import { useReaction } from './hooks';
 import type { ReactionViewProps } from './types';
 
 const ReactionViewModal = ({ touchableProps, ...props }: ReactionViewProps) => {
-  const { children } = props;
+  const {
+    children,
+    onPress = () => {},
+    disabled = false,
+    onLongPress = () => {},
+  } = props;
   const rootRef = useRef<TouchableOpacity>(null);
   const contentHeightRef = useRef<number>(0);
   const contentyRef = useRef<number>(0);
-  const { emojiSize } = useReaction(props);
+  const { emojiSize, isLongPress, isSinglePress } = useReaction(props);
+
   const onPressHandler = () => {
     rootRef?.current &&
       rootRef?.current.measureInWindow(
@@ -32,6 +38,7 @@ const ReactionViewModal = ({ touchableProps, ...props }: ReactionViewProps) => {
     <TouchableOpacity
       ref={rootRef}
       disabled={
+        disabled ||
         children?.props?.hasOwnProperty('onPress') ||
         children?.props?.hasOwnProperty('onLongPress')
       }
@@ -40,12 +47,14 @@ const ReactionViewModal = ({ touchableProps, ...props }: ReactionViewProps) => {
         const { height } = event.nativeEvent.layout;
         contentHeightRef.current = height;
       }}
-      onLongPress={onPressHandler}
-      onPress={onPressHandler}>
+      activeOpacity={0}
+      onLongPress={() => (isLongPress ? onPressHandler() : null)}
+      onPress={() => (!isLongPress ? onPressHandler() : onPress())}>
       {React.isValidElement(children) &&
         React.cloneElement(children as React.ReactElement, {
-          onLongPress: onPressHandler,
-          onPress: onPressHandler,
+          onLongPress: () => (isLongPress ? onPressHandler() : onLongPress()),
+          onPress: () => (isSinglePress ? onPressHandler() : onPress()),
+          disabled: disabled,
         })}
     </TouchableOpacity>
   );

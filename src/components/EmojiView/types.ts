@@ -16,7 +16,8 @@ export interface EmojiModalProps
   setShowPopUpCard?: (showPopUpCardType: boolean) => void;
   showPopUpCard?: boolean;
   onEmojiCloseModal?: () => void;
-  isCardOpen?: (isCardOpenType?: boolean) => void;
+  onShowDismissCard?: (onShowDismissCardType?: boolean) => void;
+  isShowCardInCenter?: boolean;
 }
 
 export interface EmojiAnimationProps {

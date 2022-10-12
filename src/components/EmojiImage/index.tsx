@@ -6,13 +6,13 @@ import type { EmojiImageType } from './types';
 
 const EmojiImage = ({
   emojiElementStyle,
-  iconSize = 0,
+  emojiSize = 0,
   ...rest
 }: EmojiImageType) => {
   const imageStyle = StyleSheet.flatten([
     styles.img,
     emojiElementStyle,
-    { width: moderateScale(iconSize), height: moderateScale(iconSize) },
+    { width: moderateScale(emojiSize), height: moderateScale(emojiSize) },
   ]);
   return <Image style={imageStyle} {...rest} />;
 };
