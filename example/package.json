@@ -10,6 +10,7 @@
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
   },
   "dependencies": {
+    "lodash": "^4.17.21",
     "react": "18.0.0",
     "react-native": "0.69.5",
     "react-native-gesture-handler": "^2.6.0",
@@ -21,6 +22,7 @@
     "@react-native-community/eslint-config": "^3.0.1",
     "@tsconfig/react-native": "^2.0.2",
     "@types/jest": "^27.4.0",
+    "@types/lodash": "^4.14.186",
     "@types/react-native": "^0.69.5",
     "@types/react-test-renderer": "^18.0.0",
     "@typescript-eslint/eslint-plugin": "^5.29.0",
