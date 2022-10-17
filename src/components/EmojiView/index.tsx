@@ -48,7 +48,7 @@ const EmojiView = ({
           <EmojiItem
             isTouchRelease={touchRelease}
             index={index}
-            onPress={() => emojiPressHandler(item)}
+            onEmojiPress={() => emojiPressHandler(item)}
             key={item?.title}
             data={item}
             currentPosition={currentEmoji}

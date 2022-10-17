@@ -6,7 +6,14 @@ import styles from './styles';
 import type { ReactionViewProps } from './types';
 
 const ReactionsView = (props: ReactionViewProps) => {
-  const { children, touchableProps, itemIndex = 0 } = props;
+  const {
+    children,
+    touchableProps,
+    itemIndex = 0,
+    onPress = () => {},
+    disabled = false,
+    onLongPress = () => {},
+  } = props;
   const [showPopUpCard, setShowPopUpCard] = useState(false);
   const [viewHeight, setViewHeight] = useState<number>(0);
   const rootRef = useRef<SafeAreaView>(null);
@@ -20,6 +27,8 @@ const ReactionsView = (props: ReactionViewProps) => {
     setMainViewWidth,
     mainViewY,
     emojiSize,
+    isLongPress,
+    isSinglePress,
   } = useReaction(props);
 
   const onPressHandler = () => {
@@ -73,6 +82,7 @@ const ReactionsView = (props: ReactionViewProps) => {
       )}
       <TouchableOpacity
         disabled={
+          disabled ||
           children?.props?.hasOwnProperty('onPress') ||
           children?.props?.hasOwnProperty('onLongPress')
         }
@@ -81,12 +91,13 @@ const ReactionsView = (props: ReactionViewProps) => {
           const { height } = event.nativeEvent.layout;
           setViewHeight(height);
         }}
-        onLongPress={onPressHandler}
-        onPress={onPressHandler}>
+        onLongPress={() => (isLongPress ? onPressHandler() : null)}
+        onPress={() => (!isLongPress ? onPressHandler() : onPress())}>
         {React.isValidElement(children) &&
           React.cloneElement(children as React.ReactElement, {
-            onLongPress: onPressHandler,
-            onPress: onPressHandler,
+            onLongPress: () => (isLongPress ? onPressHandler() : onLongPress()),
+            onPress: () => (isSinglePress ? onPressHandler() : onPress()),
+            disabled: disabled,
           })}
       </TouchableOpacity>
     </SafeAreaView>

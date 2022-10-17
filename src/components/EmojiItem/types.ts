@@ -3,7 +3,7 @@ import type { EmojiItemProp } from '../ReactionView/types';
 
 export interface EmojiItemProps extends emojiProps {
   data: EmojiItemProp;
-  onPress: () => void;
+  onEmojiPress: () => void;
   currentPosition: number;
   showTopEmojiCard?: boolean;
   emojiStyle?: StyleProp<TextStyle>;

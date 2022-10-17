@@ -43,7 +43,7 @@ const EmojiButton = ({
 const EmojiItem = (props: EmojiItemProps) => {
   const {
     data,
-    onPress,
+    onEmojiPress,
     titleStyle,
     titleBoxStyle,
     emojiContainerStyle,
@@ -103,7 +103,7 @@ const EmojiItem = (props: EmojiItemProps) => {
       )}
       <Pressable
         ref={childref}
-        onPress={onPress}
+        onPress={onEmojiPress}
         style={[styles.root, emojiContainerStyle]}
         onLayout={onLayout}>
         <Animated.View style={loaded ? emojiAnimatedScaled : wavedEmoji}>
