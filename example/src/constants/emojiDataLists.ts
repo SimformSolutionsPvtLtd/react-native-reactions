@@ -20,6 +20,27 @@ export const CardEmojiList = [
     },
 ];
 
+export const CardEmojiUrlList = [
+    {
+        id: 0, emoji: 'https://cdn-icons-png.flaticon.com/128/2584/2584606.png', title: 'like'
+    },
+    {
+        id: 1, emoji: 'https://cdn-icons-png.flaticon.com/128/1933/1933691.png', title: 'love'
+    },
+    {
+        id: 2, emoji: 'https://cdn-icons-png.flaticon.com/128/1791/1791330.png', title: 'cry'
+    },
+    {
+        id: 3, emoji: 'https://cdn-icons-png.flaticon.com/128/742/742751.png', title: 'smile'
+    },
+    {
+        id: 4, emoji: 'https://cdn-icons-png.flaticon.com/128/742/742752.png', title: 'sad'
+    },
+    {
+        id: 5, emoji: 'https://cdn-icons-png.flaticon.com/128/2274/2274543.png', title: 'happy'
+    },
+];
+
 export const PostItemList = [
     {
       id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',

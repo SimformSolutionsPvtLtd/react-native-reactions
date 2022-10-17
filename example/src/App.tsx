@@ -1,6 +1,6 @@
 import React from 'react';
-import { SafeAreaView } from 'react-native';
-import { FlatList, ReactionProvider } from 'react-native-reactions';
+import { FlatList, SafeAreaView } from 'react-native';
+import { ReactionProvider } from 'react-native-reactions';
 import { Card } from './component';
 import { styles } from './AppStyles'
 import { Colors } from './theme';

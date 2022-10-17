@@ -1,3 +1,3 @@
-import Card from "./Card";
+import { Card, CustomCard } from "./Card";
 
-export { Card }
+export { Card, CustomCard }
