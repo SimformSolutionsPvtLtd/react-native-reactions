@@ -1,21 +1,27 @@
 import { Image, Text, View } from 'react-native'
-import React, { useState } from 'react'
+import React, { memo, useState } from 'react'
 import { styles } from './style'
 import { Reaction } from 'react-native-reactions'
 import { AppConstants, CardEmojiList, Strings } from '../../constants'
 import { CardProps, EmojiItemProp } from './type'
+import _ from 'lodash';
 
-const Footer = ({ index, selectedEmoji, setSelectedEmoji }: CardProps) => (
+const Footer = ({ index, selectedEmoji, setSelectedEmoji, onShowDismissCard }: CardProps) => (
     <View style={styles.bottomContainer} >
-        <Reaction type='modal' items={CardEmojiList} itemIndex={index} onTap={setSelectedEmoji}>
+        <Reaction
+            type='modal'
+            items={CardEmojiList}
+            itemIndex={index}
+            onTap={setSelectedEmoji}
+            onShowDismissCard={onShowDismissCard}>
             <Text>{selectedEmoji ? selectedEmoji?.emoji : Strings?.like}</Text>
         </Reaction>
-            <Text>{Strings?.comment}</Text>
-            <Text>{Strings?.share}</Text>
+        <Text>{Strings?.comment} {index}</Text>
+        <Text>{Strings?.share}</Text>
     </View>
 )
 
-const Card = ({ index }: CardProps) => {
+const Card = ({ index, onShowDismissCard }: CardProps) => {
     const [selectedEmoji, setSelectedEmoji] = useState<EmojiItemProp>();
     return (
         <View style={styles.cardContainer}>
@@ -26,9 +32,11 @@ const Card = ({ index }: CardProps) => {
                 />
             </View>
             <View style={styles.line} />
-            <Footer index={index} selectedEmoji={selectedEmoji} setSelectedEmoji={setSelectedEmoji} />
+            <Footer index={index} selectedEmoji={selectedEmoji} setSelectedEmoji={setSelectedEmoji} onShowDismissCard={onShowDismissCard} />
         </View>
     )
 }
 
-export default Card
+export default memo(Card, (prevProps, nextProps) =>
+    _.isEqual(prevProps?.isScrollDisable, nextProps?.isScrollDisable),
+);

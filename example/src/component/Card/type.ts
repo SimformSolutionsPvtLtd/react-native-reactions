@@ -9,5 +9,7 @@ export interface EmojiItemProp {
 export interface CardProps {
   index: number;
   selectedEmoji?:EmojiItemProp
-  setSelectedEmoji?:(e:EmojiItemProp | undefined)=>void
+  setSelectedEmoji?:(e:EmojiItemProp | undefined)=>void 
+  onShowDismissCard?: (e?:boolean)=> void;
+  isScrollDisable?: boolean;
 }
