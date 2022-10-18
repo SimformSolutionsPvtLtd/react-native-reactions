@@ -70,6 +70,7 @@ const useEmojiView = (props: EmojiModalProps) => {
       duration: cardDuration,
     });
   }, [cardAnim, cardDuration, showPopUpCard]);
+
   const panResponder = useRef(
     PanResponder.create({
       onMoveShouldSetPanResponder: () => true,

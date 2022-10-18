@@ -5,7 +5,7 @@ import { useReaction } from './hooks';
 import styles from './styles';
 import type { ReactionViewProps } from './types';
 
-const ReactionsView = (props: ReactionViewProps) => {
+const ReactionView = (props: ReactionViewProps) => {
   const {
     children,
     touchableProps,
@@ -104,4 +104,4 @@ const ReactionsView = (props: ReactionViewProps) => {
   );
 };
 
-export default ReactionsView;
+export default ReactionView;

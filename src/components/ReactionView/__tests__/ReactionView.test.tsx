@@ -4,7 +4,7 @@ import ReactionView from '../ReactionView';
 
 jest.useFakeTimers();
 
-describe('ReactionsView component', () => {
+describe('ReactionView component', () => {
   it('Match Snapshot', () => {
     const { toJSON } = render(<ReactionView items={[]} />);
     expect(toJSON()).toMatchSnapshot();

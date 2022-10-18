@@ -1,9 +1,9 @@
 import { Image, Text, View } from 'react-native'
 import React, { memo, useState } from 'react'
-import { styles } from './style'
+import { styles } from './styles'
 import { Reaction } from 'react-native-reactions'
 import { AppConstants, CardEmojiList, Strings } from '../../constants'
-import { CardProps, EmojiItemProp } from './type'
+import { CardProps, EmojiItemProp } from './types'
 import _ from 'lodash';
 
 const Footer = ({ index, selectedEmoji, setSelectedEmoji, onShowDismissCard }: CardProps) => (
@@ -27,7 +27,7 @@ const Card = ({ index, onShowDismissCard }: CardProps) => {
         <View style={styles.cardContainer}>
             <View style={styles.postImageContainer}>
                 <Image
-                    source={{ uri: AppConstants?.postImagepath }}
+                    source={{ uri: AppConstants?.postImagePath }}
                     style={styles.postImage}
                 />
             </View>

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ReactionsView component Match Snapshot 1`] = `
+exports[`ReactionView component Match Snapshot 1`] = `
 <RCTSafeAreaView
   emulateUnlessSupported={true}
   style={
