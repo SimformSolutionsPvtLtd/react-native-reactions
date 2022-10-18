@@ -16,18 +16,17 @@ const Footer = ({ index, selectedEmoji, setSelectedEmoji, onShowDismissCard }: C
             onShowDismissCard={onShowDismissCard}>
             <Text>{selectedEmoji ? selectedEmoji?.emoji : Strings?.like}</Text>
         </Reaction>
-        <Text>{Strings?.comment} {index}</Text>
         <Text>{Strings?.share}</Text>
     </View>
 )
 
-const Card = ({ index, onShowDismissCard }: CardProps) => {
+const Card = ({ index, onShowDismissCard, item }: CardProps) => {
     const [selectedEmoji, setSelectedEmoji] = useState<EmojiItemProp>();
     return (
         <View style={styles.cardContainer}>
             <View style={styles.postImageContainer}>
                 <Image
-                    source={{ uri: AppConstants?.postImagePath }}
+                    source={{ uri: item?.image }}
                     style={styles.postImage}
                 />
             </View>

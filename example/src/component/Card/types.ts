@@ -6,10 +6,16 @@ export interface EmojiItemProp {
   title: string;
 }
 
+interface PostItemListProps {
+  id: string;
+  title: string;
+  image: string;
+}
 export interface CardProps {
   index: number;
   selectedEmoji?:EmojiItemProp
   setSelectedEmoji?:(e:EmojiItemProp | undefined)=>void 
   onShowDismissCard?: (e?:boolean)=> void;
   isScrollDisable?: boolean;
+  item?:PostItemListProps
 }

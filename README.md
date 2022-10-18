@@ -20,7 +20,7 @@ This library provides emoji reactions features like Instagram/WhatsApp or other 
 
 ## Quick Access
 
-[Installation](#installation) | [Reactions](#reactions) | [Properties](#properties) | [Example](#example) | [License](#license) | 
+[Installation](#installation) | [Reactions](#reactions) | [Properties](#properties) | [Example](#example) | [License](#license) 
 
 # Installation
 
@@ -60,10 +60,10 @@ module.exports = {
 #### 🎬 Preview
 ![Default Reaction](./assets/Reaction.png)
 ---
-### Card Emoji Format
+### Emoji Data Format
 
 ```
- const CardEmojiList = [
+ const ReactionItems = [
     {
         id: 0, emoji: '😇', title: 'like'
     },
@@ -106,17 +106,17 @@ const PostItemList = [
     {
       id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
       title: 'First Item',
-      image:'https://thumbs.dreamstime.com/b/free-shipment-sale-happy-little-kid-cardboard-box-cute-child-toddler-clients-receiving-carton-package-post-mail-parcel-157640927.jpg',
+      image:'https://raw.githubusercontent.com/SimformSolutionsPvtLtd/react-native-story-view/main/assets/banner.png',
     },
     {
       id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
       title: 'Second Item',
-      image:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1r0Aler0AJzpuvvL5i2bGK6tBp39fN3HKoQ&usqp=CAU',
+      image:'https://raw.githubusercontent.com/SimformSolutionsPvtLtd/react-native-radial-slider/main/assets/banner.png',
     },
     {
       id: '58694a0f-3da1-471f-bd96-145571e29d72',
       title: 'Third Item',
-      image:'https://i.pinimg.com/564x/48/db/a8/48dba86fb51376627e1e53b48c377bdc.jpg',
+      image:'https://raw.githubusercontent.com/SimformSolutionsPvtLtd/react-native-country-code-select/main/assets/banner.png',
     },
   ];
 
@@ -124,7 +124,7 @@ const App = () => (
   <SafeAreaView style={styles.mainStyle}>
       <FlatList
         data={PostItemList}
-        style={{ backgroundColor: '#c9cdd0' }}
+        style={styles.flatlistStyle}
         renderItem={({ index,item }) => <Card index={index} {...item} />}
         keyExtractor={item => item?.id}
       />
@@ -137,6 +137,9 @@ const styles = StyleSheet.create({
   mainStyle: {
     flex: 1,
   },
+  flatlistStyle: { 
+    backgroundColor: '#c9cdd0', 
+  }
 });
 ```
 ##### Card
@@ -157,6 +160,7 @@ interface CardProps extends CardItemsProps {
   selectedEmoji?: EmojiItemProp
   setSelectedEmoji?: (e: EmojiItemProp | undefined) => void;
 }
+
 interface CardItemsProps {
   id?: string;
   image?: string;
@@ -176,14 +180,10 @@ const Card = ({ index, ...item }: CardProps) => {
             </View>
             <View style={styles.line} />
             <View style={styles.bottomContainer} >
-                {/* Above we provied CardEmojiList */}
-                <Reaction items={CardEmojiList} onTap={setSelectedEmoji}>
+                <Reaction items={ReactionItems} onTap={setSelectedEmoji}>
                     <Text>{selectedEmoji ? selectedEmoji?.emoji : 'Like'}</Text>
                 </Reaction>
-                <Text>Comment</Text>
-                <Reaction items={CardEmojiList} onTap={setSelectedEmoji}>
                     <Text>Share</Text>
-                </Reaction>
             </View>
         </View>
     )
@@ -203,7 +203,8 @@ const styles = StyleSheet.create({
     postImage: {
         width: '100%',
         height: 200,
-        zIndex: -1
+        zIndex: -1,
+        resizeMode:'center',
     },
     line: {
         borderWidth: 0.3,
@@ -224,7 +225,7 @@ const styles = StyleSheet.create({
 
 
 ## Modal Reactions
-- Basically, modal reactions use to avoid the zIndex issue on reactions.
+-  Modal reaction variant can be used to avoid the zIndex / Overlap issue on reactions
 
 > Note: Make sure to wrap your root component with ReactionProvider
 
@@ -262,13 +263,12 @@ import { ReactionProvider } from 'react-native-reactions';
 ##### Card.tsx
  Use the above [Card](#card) example but the only change is to set type as modal.
 ```jsx
-  <Reaction type='modal' items={CardEmojiList} onTap={setSelectedEmoji}>
+  <Reaction type='modal' items={ReactionItems} onTap={setSelectedEmoji}>
     <Text>{selectedEmoji ? selectedEmoji?.emoji : 'Like'}</Text>
   </Reaction>
 ```
-# Properties
 ---
-## CardEmojiList
+### ReactionItems
 
 ```
 [
@@ -280,20 +280,23 @@ import { ReactionProvider } from 'react-native-reactions';
 ]
 
 ```
+# Properties
+---
+
 
 | Prop              | Default                        | Type     | Description  |
 | :---------------- | :----------------------------- | :------- | :----------- | 
 |type               | default                        | string   | Different type of component like default and modal |
-|items              | [CardEmojiList](#cardemojilist)| array    | Array of emoji reactions |
+|items              | [ReactionItems](#reactionitems)| array    | Array of reaction emojis |
 |disable            | false                          | boolean  | If true, disable all interactions for this component  |
-|variant            | default                        | string   | Variants for touch like default, onPress and onLongPress         |
-|onPress            | -                              | function | Called when the touch is released  |
-|onLongPress        | -                              | function | Called when the long touch is released  |
-|onTap              | -                              | function | Select onTap callback function that returns the selected emoji |
+|variant            | default                        | string   | Pressable variants like default, onPress and onLongPress         |
+|onPress            | -                              | function | This function called when wrapped element is pressed  |
+|onLongPress        | -                              | function | This function called when wrapped element is long pressed  |
+|onTap              | -                              | function | Callback function that returns selected emoji |
 |cardStyle          | {}                             |ViewStyle | Card modal style|
 |emojiStyle         | {}                             |TextStyle | Emoji style |
-|emojiKey           | -                              |string    | EmojiKey will be the key name of array’s emoji field which is assign to items  |
-|onShowDismissCard  | -                              |function  | return true or false when emojicard is open|
+|emojiKey           | -                              |string    | Key name of reaction item array’s emoji field  |
+|onShowDismissCard  | -                              |function  | Callback function that returns reaction card popup status (true / false)|
 |isShowCardInCenter | false                          |boolean   | If true, Show card in center|
 |iconSize           | 25                             |number    |Size of emoji. It should be in between 15 to 30.|
 |titleStyle         | {}                             |TextStyle |Title style for emoji|
@@ -318,7 +321,7 @@ $ yarn example android   // For Android
 
 # TODO
 
-- [ ] Customize Emoji (Add new Emoji)
+- [ ] Customize Emoji (Add new Emoji) => Customize Emoji (Add more emoji options)
 - [ ] Improve gesture and select emoji in a Single gesture event
 - [ ] Landscape support
 
@@ -335,6 +338,9 @@ For bugs, feature requests, and discussion please use [GitHub Issues](https://gi
 We'd love to have you improve this library or fix a problem 💪
 Check out our [Contributing Guide](CONTRIBUTING.md) for ideas on contributing.
 
+## Awesome Mobile Libraries
+
+- Check out our other [available awesome mobile libraries](https://github.com/SimformSolutionsPvtLtd/Awesome-Mobile-Libraries)
 ## License
 
 - [MIT License](./LICENSE)

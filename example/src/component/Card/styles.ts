@@ -14,7 +14,8 @@ export const styles = StyleSheet.create({
     postImage: {
         width: '100%',
         height: verticalScale(200),
-        zIndex: -1
+        zIndex: -1,
+        resizeMode:'center'
     },
     line: {
         borderWidth: 0.3,
