@@ -25,7 +25,7 @@ const useEmojiView = (props: EmojiModalProps) => {
     setShowPopUpCard = () => {},
     showPopUpCard,
     cardDuration = 400,
-    opacityRange,
+    opacityRange = [0, 0, 1],
     onEmojiCloseModal = () => {},
     onShowDismissCard = () => {},
     isShowCardInCenter = false,
@@ -114,11 +114,7 @@ const useEmojiView = (props: EmojiModalProps) => {
 
   const container = useAnimatedStyle(() => {
     return {
-      opacity: interpolate(
-        cardAnim.value,
-        [0, 0.5, 1],
-        opacityRange ? opacityRange : [0, 0, 1]
-      ),
+      opacity: interpolate(cardAnim.value, [0, 0.5, 1], opacityRange),
       transform: [
         {
           translateY: interpolate(

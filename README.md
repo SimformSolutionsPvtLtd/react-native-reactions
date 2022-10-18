@@ -298,7 +298,11 @@ import { ReactionProvider } from 'react-native-reactions';
 |iconSize           | 25                             |number    |Size of emoji. It should be in between 15 to 30.|
 |titleStyle         | {}                             |TextStyle |Title style for emoji|
 |titleBoxStyle      | {}                             |ViewStyle |Title box style|
-|emojiContainerStyle| {}                             |ViewStyle |Emoji container style
+|emojiContainerStyle| {}                             |ViewStyle |Emoji container style |
+|cardDuration       | 400                            |number    |Card animation duration |
+|opacityRange       | [0, 0, 1]                      |array     |Opacity range for card container |
+|emojiDuration      | 200                            |number    |Emoji animation duration |
+|scaleDuration      | 100                            |number    |Scale animation duration |
 
 ---
 

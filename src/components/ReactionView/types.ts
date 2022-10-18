@@ -1,18 +1,13 @@
-import type {
-  StyleProp,
-  TextStyle,
-  TouchableOpacityProps,
-  ViewStyle,
-} from 'react-native';
+import type { StyleProp, TouchableOpacityProps, ViewStyle } from 'react-native';
 import type { emojiProps } from '../EmojiItem/types';
+import type { EmojiAnimationProps } from '../EmojiView/types';
 
-export interface ReactionViewProps extends emojiProps {
+export interface ReactionViewProps extends emojiProps, EmojiAnimationProps {
   type?: 'default' | 'modal';
   children: JSX.Element;
   items?: EmojiItemProp[];
   onTap?: (e: EmojiItemProp | undefined) => void;
   cardStyle?: StyleProp<ViewStyle>;
-  emojiStyle?: StyleProp<TextStyle>;
   touchableProps?: TouchableOpacityProps;
   emojiKey?: string;
   itemIndex?: number;

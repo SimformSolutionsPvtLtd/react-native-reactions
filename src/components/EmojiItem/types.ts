@@ -6,7 +6,6 @@ export interface EmojiItemProps extends emojiProps {
   onEmojiPress: () => void;
   currentPosition: number;
   showTopEmojiCard?: boolean;
-  emojiStyle?: StyleProp<TextStyle>;
   emojiKey?: string;
   isModal?: boolean;
   isTouchRelease?: boolean;
@@ -15,8 +14,6 @@ export interface EmojiItemProps extends emojiProps {
   loaded?: boolean;
   index: number;
   showPopUpCard?: boolean;
-  emojiDuration?: number;
-  scaleDuration?: number;
   onEmojiCloseModal?: () => void;
   setTouchRelease?: (e: boolean) => void;
   emojiSize?: number;
@@ -24,7 +21,6 @@ export interface EmojiItemProps extends emojiProps {
 
 export interface emojiData extends emojiProps {
   emojiData: EmojiItemProp;
-  emojiStyle: StyleProp<TextStyle>;
   emojiKey?: string;
   emojiSize?: number;
 }
@@ -33,4 +29,7 @@ export interface emojiProps {
   titleStyle?: StyleProp<TextStyle>;
   titleBoxStyle?: StyleProp<ViewStyle>;
   emojiContainerStyle?: StyleProp<ViewStyle>;
+  emojiDuration?: number;
+  scaleDuration?: number;
+  emojiStyle?: StyleProp<TextStyle>;
 }
