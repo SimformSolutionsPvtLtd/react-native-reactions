@@ -16,7 +16,7 @@ const App = () => {
         data={PostItemList}
         scrollEnabled={isScrollDisable}
         style={{ backgroundColor: Colors.linkWater }}
-        renderItem={({ index }) => <Card index={index} onShowDismissCard={(e?:boolean)=>setIsScrollDisable(!e)} isScrollDisable/>}
+        renderItem={({ index }) => <Card index={index} onShowDismissCard={(e?: boolean)=> setIsScrollDisable(!e)} isScrollDisable/>}
         keyExtractor={item => item.id}
       />
     </ReactionProvider>

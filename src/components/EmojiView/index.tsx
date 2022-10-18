@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import EmojiItem from '../EmojiItem';
 import { useEmojiView } from './hooks';
-import { styles } from './style';
+import { styles } from './styles';
 import type { EmojiModalProps } from './types';
 import Animated from 'react-native-reanimated';
 
