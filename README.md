@@ -1,4 +1,4 @@
-
+![Reaction - Simform](./assets/Reaction.png)
 # react-native-reactions
 [![npm version](https://img.shields.io/badge/npm%20package-0.0.1-orange)](https://www.npmjs.org/package/react-native-country-code-select) [![Android](https://img.shields.io/badge/Platform-Android-green?logo=android)](https://www.android.com) [![iOS](https://img.shields.io/badge/Platform-iOS-green?logo=apple)](https://developer.apple.com/ios) [![MIT](https://img.shields.io/badge/License-MIT-green)](https://opensource.org/licenses/MIT)
 
@@ -321,7 +321,7 @@ $ yarn example android   // For Android
 
 # TODO
 
-- [ ] Customize Emoji (Add new Emoji) => Customize Emoji (Add more emoji options)
+- [ ] Customize Emoji (Add more emoji options)
 - [ ] Improve gesture and select emoji in a Single gesture event
 - [ ] Landscape support
 
