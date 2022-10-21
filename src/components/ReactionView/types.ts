@@ -9,11 +9,10 @@ export interface ReactionViewProps extends emojiProps, EmojiAnimationProps {
   onTap?: (e: EmojiItemProp | undefined) => void;
   cardStyle?: StyleProp<ViewStyle>;
   touchableProps?: TouchableOpacityProps;
-  emojiKey?: string;
   itemIndex?: number;
   onShowDismissCard?: (onShowDismissCardType?: boolean) => void;
   isShowCardInCenter?: boolean;
-  variant?: 'default' | 'onPress' | 'onLongPress';
+  showPopupType?: 'default' | 'onPress' | 'onLongPress';
   onPress?: () => void;
   disabled?: boolean;
   onLongPress?: () => void;

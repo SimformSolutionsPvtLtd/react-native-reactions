@@ -48,12 +48,24 @@ const ReactionViewModal = ({ touchableProps, ...props }: ReactionViewProps) => {
         contentHeightRef.current = height;
       }}
       activeOpacity={0}
-      onLongPress={() => (isLongPress ? onPressHandler() : onLongPress())}
-      onPress={() => (isSinglePress ? onPressHandler() : onPress())}>
+      onLongPress={() => (
+        isLongPress ? onPressHandler() : !isSinglePress && onPress(),
+        onLongPress()
+      )}
+      onPress={() => (
+        isSinglePress ? onPressHandler() : !isLongPress && onLongPress(),
+        onPress()
+      )}>
       {React.isValidElement(children) &&
         React.cloneElement(children as React.ReactElement, {
-          onLongPress: () => (isLongPress ? onPressHandler() : onLongPress()),
-          onPress: () => (isSinglePress ? onPressHandler() : onPress()),
+          onLongPress: () => (
+            isLongPress ? onPressHandler() : !isSinglePress && onPress(),
+            onLongPress()
+          ),
+          onPress: () => (
+            isSinglePress ? onPressHandler() : !isLongPress && onLongPress(),
+            onPress()
+          ),
           disabled: disabled,
         })}
     </TouchableOpacity>

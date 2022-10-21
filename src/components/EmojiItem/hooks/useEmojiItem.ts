@@ -42,7 +42,7 @@ const useEmojiItem = (props: EmojiItemProps) => {
         childref?.current.measureInWindow((x: number) => {
           setXValue(x);
         });
-    }, 100);
+    }, 200);
     setTitlePosition(e.nativeEvent.layout.x - 4);
   };
 

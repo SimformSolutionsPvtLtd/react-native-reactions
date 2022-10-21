@@ -24,7 +24,7 @@ const useEmojiView = (props: EmojiModalProps) => {
     onTap = () => {},
     setShowPopUpCard = () => {},
     showPopUpCard,
-    cardDuration = 400,
+    cardDuration = 150,
     opacityRange = [0, 0, 1],
     onEmojiCloseModal = () => {},
     onShowDismissCard = () => {},
