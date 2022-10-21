@@ -1,4 +1,4 @@
-![Reaction - Simform](./assets/Reaction.png)
+![Reaction - Simform](./assets/ReactionBanner.png)
 # react-native-reactions
 [![npm version](https://img.shields.io/badge/npm%20package-0.0.1-orange)](https://www.npmjs.org/package/react-native-country-code-select) [![Android](https://img.shields.io/badge/Platform-Android-green?logo=android)](https://www.android.com) [![iOS](https://img.shields.io/badge/Platform-iOS-green?logo=apple)](https://developer.apple.com/ios) [![MIT](https://img.shields.io/badge/License-MIT-green)](https://opensource.org/licenses/MIT)
 
@@ -288,22 +288,21 @@ import { ReactionProvider } from 'react-native-reactions';
 | :---------------- | :----------------------------- | :------- | :----------- | 
 |type               | default                        | string   | Different type of component like default and modal |
 |items              | [ReactionItems](#reactionitems)| array    | Array of reaction emojis |
-|disable            | false                          | boolean  | If true, disable all interactions for this component  |
-|variant            | default                        | string   | Pressable variants like default, onPress and onLongPress         |
+|disabled           | false                          | boolean  | If true, disable all interactions for this component  |
+|showPopupType    | default                        | string   | Pressable showPopupType like default, onPress and onLongPress<br />-  If showPopupType is default, then reaction popup will be shown on onPress and onLongPress both.<br /> - If showPopupType is onPress, then reaction popup will be shown on onPress only.<br /> - If showPopupType is onLongPress, then reaction popup will be shown on onLongPress only        |
 |onPress            | -                              | function | This function called when wrapped element is pressed  |
 |onLongPress        | -                              | function | This function called when wrapped element is long pressed  |
 |onTap              | -                              | function | Callback function that returns selected emoji |
 |cardStyle          | {}                             |ViewStyle | Card modal style|
 |emojiStyle         | {}                             |TextStyle | Emoji style |
-|emojiKey           | -                              |string    | Key name of reaction item array’s emoji field  |
 |onShowDismissCard  | -                              |function  | Callback function that returns reaction card popup status (true / false)|
 |isShowCardInCenter | false                          |boolean   | If true, Show card in center|
 |iconSize           | 25                             |number    |Size of emoji. It should be in between 15 to 30.|
 |titleStyle         | {}                             |TextStyle |Title style for emoji|
 |titleBoxStyle      | {}                             |ViewStyle |Title box style|
 |emojiContainerStyle| {}                             |ViewStyle |Emoji container style |
-|cardDuration       | 400                            |number    |Card animation duration |
-|opacityRange       | [0, 0, 1]                      |array     |Opacity range for card container |
+|cardDuration       | 150                            |number    |Card animation duration |
+|opacityRange       | [0, 0, 1]                      |array     |Opacity range for card container (`note`: opacity range must be in ascending order) |
 |emojiDuration      | 200                            |number    |Emoji animation duration |
 |scaleDuration      | 100                            |number    |Scale animation duration |
 
