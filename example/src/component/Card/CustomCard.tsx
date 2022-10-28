@@ -2,7 +2,7 @@ import { Image, Text, View } from 'react-native'
 import React, { memo, useState } from 'react'
 import { styles } from './styles'
 import { Reaction } from 'react-native-reactions'
-import { AppConstants, CardEmojiUrlList, Strings } from '../../constants'
+import { CardEmojiUrlList, Strings } from '../../constants'
 import { CardProps, EmojiItemProp } from './types'
 import _ from 'lodash';
 
@@ -29,13 +29,13 @@ const Footer = ({ index, selectedEmoji, setSelectedEmoji, onShowDismissCard }: C
     </View>
 )
 
-const CustomCard = ({ index, onShowDismissCard }: CardProps) => {
+const CustomCard = ({ index, onShowDismissCard, item }: CardProps) => {
     const [selectedEmoji, setSelectedEmoji] = useState<EmojiItemProp>();
     return (
         <View style={styles.cardContainer}>
             <View style={styles.postImageContainer}>
                 <Image
-                    source={{ uri: AppConstants?.postImagePath }}
+                    source={{ uri: item?.image }}
                     style={styles.postImage}
                 />
             </View>

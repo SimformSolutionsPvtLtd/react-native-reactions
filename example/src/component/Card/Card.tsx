@@ -2,7 +2,7 @@ import { Image, Text, View } from 'react-native'
 import React, { memo, useState } from 'react'
 import { styles } from './styles'
 import { Reaction } from 'react-native-reactions'
-import { AppConstants, CardEmojiList, Strings } from '../../constants'
+import { CardEmojiList, Strings } from '../../constants'
 import { CardProps, EmojiItemProp } from './types'
 import _ from 'lodash';
 

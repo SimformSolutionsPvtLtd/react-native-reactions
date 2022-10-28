@@ -3,9 +3,9 @@
 [![npm version](https://img.shields.io/badge/npm%20package-0.0.1-orange)](https://www.npmjs.org/package/react-native-country-code-select) [![Android](https://img.shields.io/badge/Platform-Android-green?logo=android)](https://www.android.com) [![iOS](https://img.shields.io/badge/Platform-iOS-green?logo=apple)](https://developer.apple.com/ios) [![MIT](https://img.shields.io/badge/License-MIT-green)](https://opensource.org/licenses/MIT)
 
 ---
-This is a pure javascript and react-native-reanimated based library that provides two types of reactions including default and modal.
+This is a pure javascript and react-native-reanimated based library that provides reaction feature like Instagram/WhatsApp or other social media.
 
-This library provides emoji reactions features like Instagram/WhatsApp or other social media, It is simple to use and fully customizable. It works on both android and iOS platforms.
+It is simple to use and fully customizable. It works on both android and iOS platforms.
 
 ---
 ## 🎬 Preview
@@ -20,7 +20,7 @@ This library provides emoji reactions features like Instagram/WhatsApp or other 
 
 ## Quick Access
 
-[Installation](#installation) | [Reactions](#reactions) | [Properties](#properties) | [Example](#example) | [License](#license) 
+[Installation](#installation) | [Reaction](#reaction) | [Properties](#properties) | [Example](#example) | [License](#license) 
 
 # Installation
 
@@ -53,9 +53,11 @@ module.exports = {
 ##### Know more about [react-native-reanimated](https://www.npmjs.com/package/react-native-reanimated)
 ---
 
-# Reactions
-- Reactions has two different types, default one and modal
-- To avoid the zIndex/Overlap issue, you can use modal instead of the default.
+# Reaction
+- Reaction component has two different variants
+    - Default reaction: This variant of reaction is based on an absolute view
+    - Modal reaction: This variant of reaction is based on a Modal view
+- To avoid the zIndex/Overlap issue, you can use modal variant of reaction component instead of the default
 
 #### 🎬 Preview
 ![Default Reaction](./assets/Reaction.png)
@@ -85,7 +87,7 @@ module.exports = {
 ];
 
 ```
-## Default Reactions
+## Default Reaction
 ---
 #### 🎬 Preview
 ![Default Absolute](./assets/absolute.gif)
@@ -183,7 +185,7 @@ const Card = ({ index, ...item }: CardProps) => {
                 <Reaction items={ReactionItems} onTap={setSelectedEmoji}>
                     <Text>{selectedEmoji ? selectedEmoji?.emoji : 'Like'}</Text>
                 </Reaction>
-                    <Text>Share</Text>
+                <Text>Share</Text>
             </View>
         </View>
     )
@@ -224,8 +226,8 @@ const styles = StyleSheet.create({
 ---
 
 
-## Modal Reactions
--  Modal reaction variant can be used to avoid the zIndex / Overlap issue on reactions
+## Modal Reaction
+-  Modal reaction variant can be used to avoid the zIndex / Overlap issue on reaction popup
 
 > Note: Make sure to wrap your root component with ReactionProvider
 
@@ -237,14 +239,14 @@ export default const App = () => {
 ```
 
 #### 🎬 Preview
-![Default Modal](./assets/Modal.gif)
+![Default Modal](./assets/modal.gif)
 ---
 
 #### Usage
 
 ---
 ##### App.tsx
- Use the above [App](#app) example but the only change is to wrap the root component with ReactionProvider.
+ Use the above [App](#app) example but the only change here is to wrap the root component with ReactionProvider.
 ```jsx
 import { ReactionProvider } from 'react-native-reactions';
 
@@ -261,7 +263,7 @@ import { ReactionProvider } from 'react-native-reactions';
 ```
 
 ##### Card.tsx
- Use the above [Card](#card) example but the only change is to set type as modal.
+ Use the above [Card](#card) example but the only change here is to set type as modal.
 ```jsx
   <Reaction type='modal' items={ReactionItems} onTap={setSelectedEmoji}>
     <Text>{selectedEmoji ? selectedEmoji?.emoji : 'Like'}</Text>
@@ -321,7 +323,6 @@ $ yarn example android   // For Android
 # TODO
 
 - [ ] Customize Emoji (Add more emoji options)
-- [ ] Improve gesture and select emoji in a Single gesture event
 - [ ] Landscape support
 
 ## Find this library useful? ❤️
