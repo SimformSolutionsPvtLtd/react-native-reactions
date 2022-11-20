@@ -21,7 +21,7 @@ const useReaction = (props: ReactionViewProps) => {
     ? width / 8
     : mainViewWidthX < 100
     ? -(width - mainViewX)
-    : mainViewX + 100;
+    : mainViewX;
 
   useEffect(() => {
     if (iconSize > GlobalConstants.max) {
@@ -56,6 +56,8 @@ const useReaction = (props: ReactionViewProps) => {
     setMainViewWidth,
     isSinglePress,
     isLongPress,
+    width,
+    showCardInCenter,
   };
 };
 
