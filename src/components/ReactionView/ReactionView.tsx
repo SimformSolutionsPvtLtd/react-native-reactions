@@ -83,6 +83,7 @@ const ReactionView = (props: ReactionViewProps) => {
         </View>
       )}
       <TouchableOpacity
+        activeOpacity={1}
         disabled={
           disabled ||
           children?.props?.hasOwnProperty('onPress') ||
@@ -112,6 +113,7 @@ const ReactionView = (props: ReactionViewProps) => {
               onPress()
             ),
             disabled: disabled,
+            activeOpacity: 1,
           })}
       </TouchableOpacity>
     </SafeAreaView>
