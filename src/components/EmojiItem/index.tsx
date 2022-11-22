@@ -102,6 +102,7 @@ const EmojiItem = (props: EmojiItemProps) => {
         </Animated.View>
       )}
       <Pressable
+        hitSlop={{ left: 20, right: 20, bottom: 20, top: 20 }}
         ref={childref}
         onPress={onEmojiPress}
         style={[styles.root, emojiContainerStyle]}
