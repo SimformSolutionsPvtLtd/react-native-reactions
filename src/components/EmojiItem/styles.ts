@@ -1,4 +1,4 @@
-import { Platform, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { Colors, moderateScale, scale, verticalScale } from '../../theme';
 
 const styles = StyleSheet.create({
@@ -6,7 +6,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginVertical: scale(3),
-    marginHorizontal: Platform.OS === 'ios' ? scale(8) : scale(5),
+    margin: scale(5),
   },
   titleBox: {
     position: 'absolute',

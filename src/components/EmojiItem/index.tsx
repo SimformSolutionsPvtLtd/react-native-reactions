@@ -1,5 +1,5 @@
 import React, { memo, useEffect } from 'react';
-import { Pressable, StyleSheet, Text } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { moderateScale, verticalScale } from '../../theme';
 import { isValidUrl } from '../../utils';
 import EmojiImage from '../EmojiImage';
@@ -101,8 +101,8 @@ const EmojiItem = (props: EmojiItemProps) => {
           <Text style={[styles.title, titleStyle]}>{data?.title}</Text>
         </Animated.View>
       )}
-      <Pressable
-        hitSlop={{ left: 20, right: 20, bottom: 20, top: 20 }}
+      <TouchableOpacity
+        hitSlop={{ bottom: 30, top: 30 }}
         ref={childref}
         onPress={onEmojiPress}
         style={[styles.root, emojiContainerStyle]}
@@ -113,7 +113,7 @@ const EmojiItem = (props: EmojiItemProps) => {
             {...{ emojiStyle, emojiKey, emojiSize }}
           />
         </Animated.View>
-      </Pressable>
+      </TouchableOpacity>
     </>
   );
 };
