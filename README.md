@@ -12,9 +12,9 @@ It is simple to use and fully customizable. It works on both android and iOS pla
 
 ---
 
-| Default                                          | Modal                                        |
+| Default                                          | Custom                                        |
 | ----------------------------------------------------- | -------------------------------------------------- |
-| ![alt Default](./assets/absolute.gif) | ![alt Modal](./assets/modal.gif) |
+| ![alt Default](./assets/default.gif) | ![alt Modal](./assets/custom.gif) |
 
 ---
 
@@ -66,31 +66,31 @@ module.exports = {
 
 ```
  const ReactionItems = [
-    {
-        id: 0, emoji: '😇', title: 'like'
-    },
-    {
-        id: 1, emoji: '🥰', title: 'love'
-    },
-    {
-        id: 2, emoji: '🤗', title: 'care'
-    },
-    {
-        id: 3, emoji: '😘', title: 'kiss'
-    },
-    {
-        id: 4, emoji: '😂', title: 'laught'
-    },
-    {
-        id: 5, emoji: '😎', title: 'cool'
-    },
+  {
+    id: 0, emoji: '😇', title: 'like'
+  },
+  {
+    id: 1, emoji: '🥰', title: 'love'
+  },
+  {
+    id: 2, emoji: '🤗', title: 'care'
+  },
+  {
+    id: 3, emoji: '😘', title: 'kiss'
+  },
+  {
+    id: 4, emoji: '😂', title: 'laugh'
+  },
+  {
+    id: 5, emoji: '😎', title: 'cool'
+  },
 ];
 
 ```
 ## Default Reaction
 ---
 #### 🎬 Preview
-![Default Absolute](./assets/absolute.gif)
+![Default Absolute](./assets/default.gif)
 ---
 
 #### Usage
@@ -124,12 +124,12 @@ const PostItemList = [
 
 const App = () => (
   <SafeAreaView style={styles.mainStyle}>
-      <FlatList
-        data={PostItemList}
-        style={styles.flatlistStyle}
-        renderItem={({ index,item }) => <Card index={index} {...item} />}
-        keyExtractor={item => item?.id}
-      />
+    <FlatList
+      data={PostItemList}
+      style={styles.flatlistStyle}
+      renderItem={({ index,item }) => <Card index={index} {...item} />}
+      keyExtractor={item => item?.id}
+    />
   </SafeAreaView>
 );
 
@@ -173,50 +173,50 @@ const Card = ({ index, ...item }: CardProps) => {
     const [selectedEmoji, setSelectedEmoji] = useState<EmojiItemProp>();
 
     return (
-        <View style={styles.cardContainer}>
-            <View style={styles.postImageContainer}>
-                <Image
-                    source={{ uri: item?.image }}
-                    style={styles.postImage}
-                />
-            </View>
-            <View style={styles.line} />
-            <View style={styles.bottomContainer} >
-                <Reaction items={ReactionItems} onTap={setSelectedEmoji}>
-                    <Text>{selectedEmoji ? selectedEmoji?.emoji : 'Like'}</Text>
-                </Reaction>
-                <Text>Share</Text>
-            </View>
-        </View>
+      <View style={styles.cardContainer}>
+          <View style={styles.postImageContainer}>
+              <Image
+                source={{ uri: item?.image }}
+                style={styles.postImage}
+              />
+          </View>
+          <View style={styles.line} />
+          <View style={styles.bottomContainer} >
+              <Reaction items={ReactionItems} onTap={setSelectedEmoji}>
+                  <Text>{selectedEmoji ? selectedEmoji?.emoji : 'Like'}</Text>
+              </Reaction>
+              <Text>Share</Text>
+          </View>
+      </View>
     )
 }
 
 export default Card
 
 const styles = StyleSheet.create({
-    cardContainer: {
-        marginVertical: 5,
-        backgroundColor: '#FFFFFF',
+  cardContainer: {
+    marginVertical: 5,
+    backgroundColor: '#FFFFFF',
+  },
+  postImageContainer: {
+    alignItems: 'center',
+    zIndex: -1
     },
-    postImageContainer: {
-        alignItems: 'center',
-        zIndex: -1
+  postImage: {
+    width: '100%',
+    height: 200,
+    zIndex: -1,
+    resizeMode:'center',
     },
-    postImage: {
-        width: '100%',
-        height: 200,
-        zIndex: -1,
-        resizeMode:'center',
-    },
-    line: {
-        borderWidth: 0.3,
-        borderColor: '#c9cdd0',
-    },
-    bottomContainer: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        margin: 10,
-        marginHorizontal: 20
+  line: {
+    borderWidth: 0.3,
+    borderColor: '#c9cdd0',
+  },
+  bottomContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    margin: 10,
+    marginHorizontal: 20
     },
 
 })
@@ -239,7 +239,7 @@ export default const App = () => {
 ```
 
 #### 🎬 Preview
-![Default Modal](./assets/modal.gif)
+![Default Modal](./assets/custom.gif)
 ---
 
 #### Usage
@@ -292,8 +292,8 @@ import { ReactionProvider } from 'react-native-reactions';
 |items              | [ReactionItems](#reactionitems)| array    | Array of reaction emojis |
 |disabled           | false                          | boolean  | If true, disable all interactions for this component  |
 |showPopupType    | default                        | string   | Pressable showPopupType like default, onPress and onLongPress<br />-  If showPopupType is default, then reaction popup will be shown on onPress and onLongPress both.<br /> - If showPopupType is onPress, then reaction popup will be shown on onPress only.<br /> - If showPopupType is onLongPress, then reaction popup will be shown on onLongPress only        |
-|onPress            | -                              | function | This function called when wrapped element is pressed  |
-|onLongPress        | -                              | function | This function called when wrapped element is long pressed  |
+|onPress            | -                              | function | Callback function that triggers when the wrapped element is pressed  |
+|onLongPress        | -                              | function | Callback function that triggers when the wrapped element is long pressed |
 |onTap              | -                              | function | Callback function that returns selected emoji |
 |cardStyle          | {}                             |ViewStyle | Card modal style|
 |emojiStyle         | {}                             |TextStyle | Emoji style |
