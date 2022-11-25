@@ -13,7 +13,7 @@ export const CardEmojiList = [
         id: 3, emoji: '😘', title: 'kiss'
     },
     {
-        id: 4, emoji: '😂', title: 'laught'
+        id: 4, emoji: '😂', title: 'laugh'
     },
     {
         id: 5, emoji: '😎', title: 'cool'

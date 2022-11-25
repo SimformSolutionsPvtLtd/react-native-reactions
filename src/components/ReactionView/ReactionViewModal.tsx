@@ -36,6 +36,7 @@ const ReactionViewModal = ({ touchableProps, ...props }: ReactionViewProps) => {
 
   return (
     <TouchableOpacity
+      hitSlop={{ top: 20, left: 20, right: 20, bottom: 20 }}
       ref={rootRef}
       disabled={
         disabled ||
@@ -47,7 +48,7 @@ const ReactionViewModal = ({ touchableProps, ...props }: ReactionViewProps) => {
         const { height } = event.nativeEvent.layout;
         contentHeightRef.current = height;
       }}
-      activeOpacity={0}
+      activeOpacity={1}
       onLongPress={() => (
         isLongPress ? onPressHandler() : !isSinglePress && onPress(),
         onLongPress()
@@ -67,6 +68,7 @@ const ReactionViewModal = ({ touchableProps, ...props }: ReactionViewProps) => {
             onPress()
           ),
           disabled: disabled,
+          activeOpacity: 1,
         })}
     </TouchableOpacity>
   );

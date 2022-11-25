@@ -5,7 +5,8 @@ const styles = StyleSheet.create({
   root: {
     alignItems: 'center',
     justifyContent: 'center',
-    margin: scale(3),
+    marginVertical: scale(3),
+    margin: scale(5),
   },
   titleBox: {
     position: 'absolute',

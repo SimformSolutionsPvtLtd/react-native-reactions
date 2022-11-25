@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import type { LayoutChangeEvent, View } from 'react-native';
+import type { LayoutChangeEvent, TouchableOpacity } from 'react-native';
 import {
   interpolate,
   useAnimatedStyle,
@@ -34,7 +34,7 @@ const useEmojiItem = (props: EmojiItemProps) => {
     );
   }, [waveAnim, index, showPopUpCard, emojiDuration]);
 
-  const childref = useRef<View | null>(null);
+  const childref = useRef<TouchableOpacity | null>(null);
 
   const onLayout = (e: LayoutChangeEvent) => {
     setTimeout(() => {

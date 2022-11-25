@@ -30,5 +30,6 @@ export const styles = StyleSheet.create({
     emojiImage:{
         width: scale(18),
         height: verticalScale(18),
+        resizeMode: "contain"
     }
 })

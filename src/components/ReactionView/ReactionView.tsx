@@ -29,13 +29,15 @@ const ReactionView = (props: ReactionViewProps) => {
     emojiSize,
     isLongPress,
     isSinglePress,
+    width: screenWidth,
+    showCardInCenter,
   } = useReaction(props);
 
   const onPressHandler = () => {
     rootRef?.current &&
       rootRef?.current.measureInWindow(
         (x: number, y: number, width: number) => {
-          setMainViewX(x);
+          setMainViewX(prev => (prev === 0 ? x : prev));
           setMainViewY(y);
           setMainViewWidth(width);
           setCurrentEmoji(0);
@@ -48,9 +50,9 @@ const ReactionView = (props: ReactionViewProps) => {
     [
       styles.subContainer,
       showTopEmojiCard ? { top: viewHeight } : { bottom: viewHeight - 10 },
-      {
-        transform: [{ translateX: showCardPosition }],
-      },
+      showCardPosition > 0
+        ? { left: showCardInCenter ? -(screenWidth / 2) : 0 }
+        : { right: mainViewX + showCardPosition },
     ],
   ]);
   const hoverIndex: number = showTopEmojiCard ? -itemIndex : 1;
@@ -81,6 +83,7 @@ const ReactionView = (props: ReactionViewProps) => {
         </View>
       )}
       <TouchableOpacity
+        activeOpacity={1}
         disabled={
           disabled ||
           children?.props?.hasOwnProperty('onPress') ||
@@ -110,6 +113,7 @@ const ReactionView = (props: ReactionViewProps) => {
               onPress()
             ),
             disabled: disabled,
+            activeOpacity: 1,
           })}
       </TouchableOpacity>
     </SafeAreaView>

@@ -129,7 +129,7 @@ const useEmojiView = (props: EmojiModalProps) => {
             ? showCardInCenter || isShowCardInCenter
               ? 0
               : showCardPosition
-            : 0,
+            : showCardPosition,
         },
       ],
     };
