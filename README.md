@@ -244,6 +244,20 @@ export default const App = () => {
 
 #### Usage
 
+```jsx
+
+const ReactionItem = () => {
+  const [selectedEmoji, setSelectedEmoji] = useState();
+    return (
+      <View>
+        <Reaction items={ReactionItems} onTap={setSelectedEmoji}>
+          <Text>{selectedEmoji ? selectedEmoji?.emoji : 'Like'}</Text>
+        </Reaction>
+      </View>
+    )
+}
+
+```
 ---
 ##### App.tsx
  Use the above [App](#app) example but the only change here is to wrap the root component with ReactionProvider.
@@ -291,7 +305,7 @@ import { ReactionProvider } from 'react-native-reactions';
 |type               | default                        | string   | Different type of component like default and modal |
 |items              | [ReactionItems](#reactionitems)| array    | Array of reaction emojis |
 |disabled           | false                          | boolean  | If true, disable all interactions for this component  |
-|showPopupType    | default                        | string   | Pressable showPopupType like default, onPress and onLongPress<br />-  If showPopupType is default, then reaction popup will be shown on onPress and onLongPress both.<br /> - If showPopupType is onPress, then reaction popup will be shown on onPress only.<br /> - If showPopupType is onLongPress, then reaction popup will be shown on onLongPress only        |
+|showPopupType    | default                        | string   | Pressable showPopupType like default and onPress<br />-  If showPopupType is default, then reaction popup will be shown on onLongPress only<br /> - If showPopupType is onPress, then reaction popup will be shown on onPress only
 |onPress            | -                              | function | Callback function that triggers when the wrapped element is pressed  |
 |onLongPress        | -                              | function | Callback function that triggers when the wrapped element is long pressed |
 |onTap              | -                              | function | Callback function that returns selected emoji |

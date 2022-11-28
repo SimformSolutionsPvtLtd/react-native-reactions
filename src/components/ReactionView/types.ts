@@ -12,7 +12,7 @@ export interface ReactionViewProps extends emojiProps, EmojiAnimationProps {
   itemIndex?: number;
   onShowDismissCard?: (onShowDismissCardType?: boolean) => void;
   isShowCardInCenter?: boolean;
-  showPopupType?: 'default' | 'onPress' | 'onLongPress';
+  showPopupType?: 'default' | 'onPress';
   onPress?: () => void;
   disabled?: boolean;
   onLongPress?: () => void;
