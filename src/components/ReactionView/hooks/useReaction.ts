@@ -35,13 +35,9 @@ const useReaction = (props: ReactionViewProps) => {
 
   const showTopEmojiCard: boolean = mainViewY < 150 ? true : false;
 
-  const isSinglePress =
-    showPopupType === GlobalConstants.onPress ||
-    showPopupType === GlobalConstants.default;
+  const isSinglePress = showPopupType === GlobalConstants.onPress;
 
-  const isLongPress =
-    showPopupType === GlobalConstants.onLongPress ||
-    showPopupType === GlobalConstants.default;
+  const isLongPress = showPopupType === GlobalConstants.default;
 
   return {
     currentEmoji,
