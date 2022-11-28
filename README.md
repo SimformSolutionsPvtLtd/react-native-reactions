@@ -95,6 +95,21 @@ module.exports = {
 
 #### Usage
 
+```jsx
+
+const ReactionItem = () => {
+  const [selectedEmoji, setSelectedEmoji] = useState();
+    return (
+      <View>
+        <Reaction items={ReactionItems} onTap={setSelectedEmoji}>
+          <Text>{selectedEmoji ? selectedEmoji?.emoji : 'Like'}</Text>
+        </Reaction>
+      </View>
+    )
+}
+
+```
+
 ---
 
 ##### App
@@ -244,20 +259,6 @@ export default const App = () => {
 
 #### Usage
 
-```jsx
-
-const ReactionItem = () => {
-  const [selectedEmoji, setSelectedEmoji] = useState();
-    return (
-      <View>
-        <Reaction items={ReactionItems} onTap={setSelectedEmoji}>
-          <Text>{selectedEmoji ? selectedEmoji?.emoji : 'Like'}</Text>
-        </Reaction>
-      </View>
-    )
-}
-
-```
 ---
 ##### App.tsx
  Use the above [App](#app) example but the only change here is to wrap the root component with ReactionProvider.
