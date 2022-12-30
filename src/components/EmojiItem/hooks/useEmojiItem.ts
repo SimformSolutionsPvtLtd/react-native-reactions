@@ -20,8 +20,9 @@ const useEmojiItem = (props: EmojiItemProps) => {
 
   const [xValue, setXValue] = useState<number>(0);
   const [titlePosition, setTitlePosition] = useState<number>(0);
+  //boolean flag to identify whether the emoji is pressed or not
   const scaled: boolean =
-    currentPosition > xValue && currentPosition < xValue + 30;
+    currentPosition > xValue && currentPosition < xValue + 20;
   const scaleEmoji = useSharedValue(0);
   const waveAnim = useSharedValue(0);
 

@@ -29,6 +29,11 @@ exports[`ReactionView component Match Snapshot 1`] = `
         "opacity": 1,
       }
     }
-  />
+  >
+    <View
+      onTouchEnd={[Function]}
+      onTouchStart={[Function]}
+    />
+  </View>
 </RCTSafeAreaView>
 `;

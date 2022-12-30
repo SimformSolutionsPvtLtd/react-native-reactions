@@ -18,6 +18,9 @@ export interface EmojiModalProps
   onEmojiCloseModal?: () => void;
   onShowDismissCard?: (onShowDismissCardType?: boolean) => void;
   isShowCardInCenter?: boolean;
+  directTouchRelease?: boolean;
+  directTouchLoad?: boolean;
+  position?: number;
 }
 
 export interface EmojiAnimationProps {

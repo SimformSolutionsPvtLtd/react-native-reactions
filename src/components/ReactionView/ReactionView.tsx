@@ -16,6 +16,8 @@ const ReactionView = (props: ReactionViewProps) => {
   } = props;
   const [showPopUpCard, setShowPopUpCard] = useState(false);
   const [viewHeight, setViewHeight] = useState<number>(0);
+  const [touchRelease, setTouchRelease] = useState<boolean>(false);
+  const [loaded, setLoaded] = useState<boolean>(false);
   const rootRef = useRef<SafeAreaView>(null);
   const {
     setCurrentEmoji,
@@ -31,6 +33,8 @@ const ReactionView = (props: ReactionViewProps) => {
     isSinglePress,
     width: screenWidth,
     showCardInCenter,
+    panResponder,
+    position,
   } = useReaction(props);
 
   const onPressHandler = () => {
@@ -61,12 +65,13 @@ const ReactionView = (props: ReactionViewProps) => {
     setShowPopUpCard(false);
     return true;
   };
+  const isCardOpen: boolean = mainViewX > 0 && showPopUpCard === true;
 
   return (
     <SafeAreaView
       ref={rootRef}
       style={[{ zIndex: hoverIndex, elevation: hoverIndex }]}>
-      {mainViewX > 0 && (
+      {isCardOpen && (
         <View style={subContainer}>
           <EmojiView
             onStartShouldSetResponder={onStartShouldSetResponder}
@@ -77,6 +82,9 @@ const ReactionView = (props: ReactionViewProps) => {
               setShowPopUpCard,
               showPopUpCard,
               emojiSize,
+              position,
+              directTouchRelease: touchRelease,
+              directTouchLoad: loaded,
               ...props,
             }}
           />
@@ -101,20 +109,34 @@ const ReactionView = (props: ReactionViewProps) => {
         onPress={() => (
           isSinglePress ? onPressHandler() : !isLongPress && onLongPress(),
           onPress()
-        )}>
-        {React.isValidElement(children) &&
-          React.cloneElement(children as React.ReactElement, {
-            onLongPress: () => (
-              isLongPress ? onPressHandler() : !isSinglePress && onPress(),
-              onLongPress()
-            ),
-            onPress: () => (
-              isSinglePress ? onPressHandler() : !isLongPress && onLongPress(),
-              onPress()
-            ),
-            disabled: disabled,
-            activeOpacity: 1,
-          })}
+        )}
+        {...panResponder.panHandlers}>
+        <View
+          onTouchStart={() => {
+            setLoaded(true);
+            setTouchRelease(false);
+          }}
+          onTouchEnd={() => {
+            setLoaded(false);
+            setTouchRelease(true);
+          }}>
+          {React.isValidElement(children) &&
+            React.cloneElement(children as React.ReactElement, {
+              onLongPress: () => (
+                isLongPress ? onPressHandler() : !isSinglePress && onPress(),
+                onLongPress()
+              ),
+              onPress: () => (
+                isSinglePress
+                  ? onPressHandler()
+                  : !isLongPress && onLongPress(),
+                onPress()
+              ),
+              disabled: disabled,
+              activeOpacity: 1,
+              ...panResponder.panHandlers,
+            })}
+        </View>
       </TouchableOpacity>
     </SafeAreaView>
   );
