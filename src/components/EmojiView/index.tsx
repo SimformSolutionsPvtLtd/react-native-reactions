@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import React, { useRef, useState } from 'react';
+import { LayoutRectangle, StyleSheet, View } from 'react-native';
 import EmojiItem from '../EmojiItem';
 import { useEmojiView } from './hooks';
 import { styles } from './styles';
@@ -8,9 +8,17 @@ import Animated from 'react-native-reanimated';
 
 const EmojiView = ({
   onStartShouldSetResponder,
+  getEmojiViewCoordinates,
   ...props
 }: EmojiModalProps) => {
-  const { cardStyle, y = 0, items } = props;
+  const {
+    cardStyle,
+    y = 0,
+    items,
+    directTouchRelease,
+    directTouchLoad,
+    panResponder,
+  } = props;
   const [touchRelease, setTouchRelease] = useState<boolean>(false);
   const [loaded, setLoaded] = useState<boolean>(false);
   const {
@@ -18,11 +26,11 @@ const EmojiView = ({
     emojiSize,
     hitSlopHeigth,
     hitSlopWidth,
-    panResponder,
     subContainer,
     emojiPressHandler,
     container,
   } = useEmojiView(props);
+  const measureRef = useRef<Animated.View>(null);
 
   const emojiBox = StyleSheet.flatten([styles.emojiBox, cardStyle]);
 
@@ -42,11 +50,23 @@ const EmojiView = ({
       />
       <Animated.View
         style={emojiBox}
+        ref={measureRef}
+        onLayout={() => {
+          measureRef.current?.measure((_x, _y, width, height, pageX, pageY) => {
+            const layoutRectangle: LayoutRectangle = {
+              x: pageX,
+              y: pageY,
+              width,
+              height,
+            };
+            getEmojiViewCoordinates && getEmojiViewCoordinates(layoutRectangle);
+          });
+        }}
         onTouchStart={() => setLoaded(true)}
         onTouchEnd={() => setLoaded(false)}>
         {items?.map((item, index: number) => (
           <EmojiItem
-            isTouchRelease={touchRelease}
+            isTouchRelease={directTouchRelease || touchRelease}
             index={index}
             onEmojiPress={() => emojiPressHandler(item)}
             key={item?.title}
@@ -54,7 +74,7 @@ const EmojiView = ({
             currentPosition={currentEmoji}
             iconSize={emojiSize}
             showTopEmojiCard={y > 150}
-            loaded={loaded}
+            loaded={directTouchLoad || loaded}
             {...{ setTouchRelease, ...props }}
           />
         ))}

@@ -4,9 +4,14 @@ export interface ModalProps {
   contentHeight?: number;
   width?: number;
   emojiSize?: number;
+  directTouchRelease?: boolean;
+  directTouchLoad?: boolean;
+  position?: number;
+  panResponder?: any;
 }
 
 export interface RefProps {
   show: (props: ModalProps) => void;
   hide: () => void;
+  sendUpdatedValues: (props: Partial<ModalProps>) => void;
 }

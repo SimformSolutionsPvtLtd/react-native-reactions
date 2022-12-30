@@ -14,5 +14,6 @@ export const styles = StyleSheet.create({
     },
     shadowOpacity: 0.5,
     shadowRadius: 1,
+    elevation: 5,
   },
 });
