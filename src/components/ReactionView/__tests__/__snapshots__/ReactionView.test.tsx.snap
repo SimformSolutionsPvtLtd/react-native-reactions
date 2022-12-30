@@ -29,6 +29,8 @@ exports[`ReactionView component Match Snapshot 1`] = `
         "opacity": 1,
       }
     }
-  />
+  >
+    <View />
+  </View>
 </RCTSafeAreaView>
 `;

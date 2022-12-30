@@ -14,7 +14,7 @@ const Footer = ({
 }: CardProps) => (
   <View style={styles.bottomContainer}>
     <Reaction
-      type="modal"
+      // type="modal"
       items={CardEmojiUrlList}
       itemIndex={index}
       onTap={setSelectedEmoji}

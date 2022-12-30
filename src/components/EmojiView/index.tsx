@@ -10,7 +10,13 @@ const EmojiView = ({
   onStartShouldSetResponder,
   ...props
 }: EmojiModalProps) => {
-  const { cardStyle, y = 0, items } = props;
+  const {
+    cardStyle,
+    y = 0,
+    items,
+    directTouchRelease,
+    directTouchLoad,
+  } = props;
   const [touchRelease, setTouchRelease] = useState<boolean>(false);
   const [loaded, setLoaded] = useState<boolean>(false);
   const {
@@ -46,7 +52,7 @@ const EmojiView = ({
         onTouchEnd={() => setLoaded(false)}>
         {items?.map((item, index: number) => (
           <EmojiItem
-            isTouchRelease={touchRelease}
+            isTouchRelease={directTouchRelease || touchRelease}
             index={index}
             onEmojiPress={() => emojiPressHandler(item)}
             key={item?.title}
@@ -54,7 +60,7 @@ const EmojiView = ({
             currentPosition={currentEmoji}
             iconSize={emojiSize}
             showTopEmojiCard={y > 150}
-            loaded={loaded}
+            loaded={directTouchLoad || loaded}
             {...{ setTouchRelease, ...props }}
           />
         ))}
