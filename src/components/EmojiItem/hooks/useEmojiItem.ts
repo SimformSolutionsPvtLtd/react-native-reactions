@@ -81,10 +81,14 @@ const useEmojiItem = (props: EmojiItemProps) => {
       ],
     };
   }, [emojiDuration, scaleDuration, scaleEmoji, scaled]);
+  const opacityValue =
+    waveAnim?.value !== undefined || waveAnim?.value !== 0
+      ? [0, 0.5, 1]
+      : [1, 1, 1];
 
   const wavedEmoji = useAnimatedStyle(() => {
     return {
-      opacity: interpolate(waveAnim.value, [0, 0.5, 1], [0, 0.5, 1]),
+      opacity: interpolate(waveAnim.value, opacityValue, opacityValue),
       transform: [
         {
           translateY: interpolate(
