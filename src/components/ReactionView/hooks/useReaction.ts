@@ -4,6 +4,7 @@ import {
   PanResponder,
   useWindowDimensions,
 } from 'react-native';
+import { reactionModalPosition } from '../../ReactionModal';
 import { GlobalConstants } from '../../../constants';
 import type { ReactionViewProps } from '../types';
 
@@ -16,6 +17,8 @@ const useReaction = (props: ReactionViewProps) => {
   const [mainViewWidth, setMainViewWidth] = useState<number>(0);
   const { width } = useWindowDimensions();
   const [position, setPosition] = useState<number>();
+  const [touchRelease, setTouchRelease] = useState<boolean>(false);
+  const [loaded, setLoaded] = useState<boolean>(false);
 
   const mainViewWidthX = width - (mainViewX + mainViewWidth);
 
@@ -59,6 +62,10 @@ const useReaction = (props: ReactionViewProps) => {
     if (event.nativeEvent?.pageX <= 367) {
       const currentItem = Math.floor(event.nativeEvent?.pageX);
       setPosition(currentItem ?? 0);
+      reactionModalPosition.current &&
+        reactionModalPosition?.current?.show({
+          position: currentItem,
+        });
     } else {
       setPosition(0);
     }
@@ -81,6 +88,10 @@ const useReaction = (props: ReactionViewProps) => {
     position,
     setPosition,
     panResponder,
+    setTouchRelease,
+    touchRelease,
+    loaded,
+    setLoaded,
   };
 };
 

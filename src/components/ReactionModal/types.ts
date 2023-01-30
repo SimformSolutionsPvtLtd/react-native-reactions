@@ -4,6 +4,8 @@ export interface ModalProps {
   contentHeight?: number;
   width?: number;
   emojiSize?: number;
+  position?: number;
+  directTouchLoad?: boolean;
 }
 
 export interface RefProps {
