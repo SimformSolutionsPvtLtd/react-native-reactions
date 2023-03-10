@@ -1,8 +1,17 @@
-import React, { useRef } from 'react';
-import { TouchableOpacity } from 'react-native';
+import React, {
+  createRef,
+  useEffect,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from 'react';
+import { LayoutRectangle, Text, TouchableOpacity, View } from 'react-native';
 import { reactionModalRef } from '../ReactionModal';
 import { useReaction } from './hooks';
-import type { ReactionViewProps } from './types';
+import styles from './styles';
+import type { ReactionViewProps, GetCoordinateRef } from './types';
+
+export const getCoordinatesRef = createRef<GetCoordinateRef>();
 
 const ReactionViewModal = ({ touchableProps, ...props }: ReactionViewProps) => {
   const {
@@ -14,7 +23,23 @@ const ReactionViewModal = ({ touchableProps, ...props }: ReactionViewProps) => {
   const rootRef = useRef<TouchableOpacity>(null);
   const contentHeightRef = useRef<number>(0);
   const contentyRef = useRef<number>(0);
-  const { emojiSize, isLongPress, isSinglePress } = useReaction(props);
+  const [touchRelease, setTouchRelease] = useState<boolean>(false);
+  const [loaded, setLoaded] = useState<boolean>(false);
+  const [emojiViewCoordinates, setEmojiViewCoordinates] =
+    useState<LayoutRectangle>({
+      width: 0,
+      height: 0,
+      x: 0,
+      y: 0,
+    });
+  const { emojiSize, isLongPress, isSinglePress, panResponder, position } =
+    useReaction(props);
+
+  useImperativeHandle(getCoordinatesRef, () => ({
+    sendCoordinates: coordinates => {
+      setEmojiViewCoordinates(coordinates);
+    },
+  }));
 
   const onPressHandler = () => {
     rootRef?.current &&
@@ -27,11 +52,60 @@ const ReactionViewModal = ({ touchableProps, ...props }: ReactionViewProps) => {
               width,
               contentHeight: contentHeightRef.current,
               emojiSize,
+              directTouchRelease: touchRelease,
+              directTouchLoad: loaded,
+              position,
+              panResponder,
               ...props,
             });
           contentyRef.current = y;
         }
       );
+  };
+
+  useEffect(() => {
+    reactionModalRef.current &&
+      reactionModalRef.current?.sendUpdatedValues({
+        directTouchRelease: touchRelease,
+        directTouchLoad: loaded,
+        position,
+        panResponder,
+        ...props,
+      });
+  }, [loaded, panResponder, position, props, touchRelease]);
+
+  const child = React.Children.only(children);
+  const checkTouchRelease =
+    position &&
+    position > emojiViewCoordinates.x &&
+    position <= emojiViewCoordinates.width + emojiViewCoordinates.x;
+
+  const renderChildren = () => {
+    return children?.type?.displayName === 'View' ? (
+      <TouchableOpacity
+        activeOpacity={1}
+        onLongPress={() => (
+          isLongPress ? onPressHandler() : !isSinglePress && onPress(),
+          onLongPress()
+        )}
+        onPress={() => (
+          isLongPress ? onPressHandler() : !isSinglePress && onPress(),
+          onLongPress()
+        )}>
+        {child.props.children}
+      </TouchableOpacity>
+    ) : (
+      React.cloneElement(children as React.ReactElement, {
+        onLongPress: () => (
+          isLongPress ? onPressHandler() : !isSinglePress && onPress(),
+          onLongPress()
+        ),
+        onPress: () => (
+          isLongPress ? onPressHandler() : !isSinglePress && onPress(),
+          onLongPress()
+        ),
+      })
+    );
   };
 
   return (
@@ -56,20 +130,34 @@ const ReactionViewModal = ({ touchableProps, ...props }: ReactionViewProps) => {
       onPress={() => (
         isSinglePress ? onPressHandler() : !isLongPress && onLongPress(),
         onPress()
-      )}>
-      {React.isValidElement(children) &&
-        React.cloneElement(children as React.ReactElement, {
-          onLongPress: () => (
-            isLongPress ? onPressHandler() : !isSinglePress && onPress(),
-            onLongPress()
-          ),
-          onPress: () => (
-            isSinglePress ? onPressHandler() : !isLongPress && onLongPress(),
-            onPress()
-          ),
-          disabled: disabled,
-          activeOpacity: 1,
-        })}
+      )}
+      {...panResponder.panHandlers}>
+      <View
+        onTouchStart={() => {
+          setLoaded(true);
+          setTouchRelease(false);
+        }}
+        onTouchEnd={() => {
+          setLoaded(false);
+          checkTouchRelease && setTouchRelease(true);
+        }}>
+        {React.isValidElement(children) && (
+          <Text
+            style={styles.textWrapperStyle}
+            onLongPress={() => (
+              isLongPress ? onPressHandler() : !isSinglePress && onPress(),
+              onLongPress()
+            )}
+            onPress={() => (
+              isSinglePress ? onPressHandler() : !isLongPress && onLongPress(),
+              onPress()
+            )}
+            disabled={disabled}
+            {...panResponder.panHandlers}>
+            {renderChildren()}
+          </Text>
+        )}
+      </View>
     </TouchableOpacity>
   );
 };

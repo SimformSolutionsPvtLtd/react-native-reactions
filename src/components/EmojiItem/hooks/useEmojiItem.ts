@@ -20,8 +20,9 @@ const useEmojiItem = (props: EmojiItemProps) => {
 
   const [xValue, setXValue] = useState<number>(0);
   const [titlePosition, setTitlePosition] = useState<number>(0);
+  //boolean flag to identify whether the emoji is pressed or not
   const scaled: boolean =
-    currentPosition > xValue && currentPosition < xValue + 30;
+    currentPosition > xValue && currentPosition < xValue + 20;
   const scaleEmoji = useSharedValue(0);
   const waveAnim = useSharedValue(0);
 
@@ -34,12 +35,12 @@ const useEmojiItem = (props: EmojiItemProps) => {
     );
   }, [waveAnim, index, showPopUpCard, emojiDuration]);
 
-  const childref = useRef<TouchableOpacity | null>(null);
+  const childRef = useRef<TouchableOpacity | null>(null);
 
   const onLayout = (e: LayoutChangeEvent) => {
     setTimeout(() => {
-      childref?.current &&
-        childref?.current.measureInWindow((x: number) => {
+      childRef?.current &&
+        childRef?.current.measureInWindow((x: number) => {
           setXValue(x);
         });
     }, 200);
@@ -109,7 +110,7 @@ const useEmojiItem = (props: EmojiItemProps) => {
     titlePosition,
     xValue,
     scaled,
-    childref,
+    childRef,
     wavedEmoji,
     emojiAnimatedScaled,
   };

@@ -64,7 +64,7 @@ const EmojiItem = (props: EmojiItemProps) => {
     titlePosition,
     onLayout,
     scaled,
-    childref,
+    childRef,
     emojiAnimatedScaled,
     wavedEmoji,
   } = useEmojiItem(props);
@@ -103,7 +103,7 @@ const EmojiItem = (props: EmojiItemProps) => {
       )}
       <TouchableOpacity
         hitSlop={{ bottom: 30, top: 30 }}
-        ref={childref}
+        ref={childRef}
         onPress={onEmojiPress}
         style={[styles.root, emojiContainerStyle]}
         onLayout={onLayout}>
