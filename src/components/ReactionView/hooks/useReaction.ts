@@ -49,7 +49,7 @@ const useReaction = (props: ReactionViewProps) => {
       onStartShouldSetPanResponder: () => true,
       onPanResponderGrant: () => {},
       onPanResponderMove: event => onGesture(event),
-      onPanResponderRelease: () => {
+      onPanResponderEnd: () => {
         setPosition(0);
       },
     })
