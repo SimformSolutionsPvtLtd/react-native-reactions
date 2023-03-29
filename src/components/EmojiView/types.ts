@@ -1,4 +1,4 @@
-import type { GestureResponderEvent } from 'react-native';
+import type { GestureResponderEvent, LayoutRectangle } from 'react-native';
 import type { ModalProps } from '../ReactionModal/types';
 import type { ReactionViewProps } from '../ReactionView';
 
@@ -18,6 +18,10 @@ export interface EmojiModalProps
   onEmojiCloseModal?: () => void;
   onShowDismissCard?: (onShowDismissCardType?: boolean) => void;
   isShowCardInCenter?: boolean;
+  directTouchRelease?: boolean;
+  directTouchLoad?: boolean;
+  position?: number;
+  getEmojiViewCoordinates?: (args: LayoutRectangle) => void;
 }
 
 export interface EmojiAnimationProps {

@@ -1,5 +1,9 @@
-import { useEffect, useState } from 'react';
-import { useWindowDimensions } from 'react-native';
+import { useEffect, useRef, useState } from 'react';
+import {
+  GestureResponderEvent,
+  PanResponder,
+  useWindowDimensions,
+} from 'react-native';
 import { GlobalConstants } from '../../../constants';
 import type { ReactionViewProps } from '../types';
 
@@ -11,6 +15,7 @@ const useReaction = (props: ReactionViewProps) => {
   const [mainViewX, setMainViewX] = useState<number>(0);
   const [mainViewWidth, setMainViewWidth] = useState<number>(0);
   const { width } = useWindowDimensions();
+  const [position, setPosition] = useState<number>(0);
 
   const mainViewWidthX = width - (mainViewX + mainViewWidth);
 
@@ -38,7 +43,26 @@ const useReaction = (props: ReactionViewProps) => {
   const isSinglePress = showPopupType === GlobalConstants.onPress;
 
   const isLongPress = showPopupType === GlobalConstants.default;
+  const panResponder = useRef(
+    PanResponder.create({
+      onMoveShouldSetPanResponder: () => true,
+      onStartShouldSetPanResponder: () => true,
+      onPanResponderGrant: () => {},
+      onPanResponderMove: event => onGesture(event),
+      onPanResponderEnd: () => {
+        setPosition(0);
+      },
+    })
+  ).current;
 
+  const onGesture = async (event: GestureResponderEvent) => {
+    if (event.nativeEvent?.pageX <= 367) {
+      const currentItem = Math.floor(event.nativeEvent?.pageX);
+      setPosition(currentItem ?? 0);
+    } else {
+      setPosition(0);
+    }
+  };
   return {
     currentEmoji,
     setCurrentEmoji,
@@ -54,6 +78,11 @@ const useReaction = (props: ReactionViewProps) => {
     isLongPress,
     width,
     showCardInCenter,
+    position,
+    setPosition,
+    panResponder,
+    mainViewWidth,
+    mainViewWidthX,
   };
 };
 

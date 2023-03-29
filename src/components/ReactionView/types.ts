@@ -1,4 +1,9 @@
-import type { StyleProp, TouchableOpacityProps, ViewStyle } from 'react-native';
+import type {
+  LayoutRectangle,
+  StyleProp,
+  TouchableOpacityProps,
+  ViewStyle,
+} from 'react-native';
 import type { emojiProps } from '../EmojiItem/types';
 import type { EmojiAnimationProps } from '../EmojiView/types';
 
@@ -16,6 +21,7 @@ export interface ReactionViewProps extends emojiProps, EmojiAnimationProps {
   onPress?: () => void;
   disabled?: boolean;
   onLongPress?: () => void;
+  panResponder?: any;
 }
 
 export interface EmojiItemProp {
@@ -24,4 +30,8 @@ export interface EmojiItemProp {
   id: number;
   emoji: React.ReactNode | string | number;
   title: string;
+}
+
+export interface GetCoordinateRef {
+  sendCoordinates: (coordinates: LayoutRectangle) => void;
 }

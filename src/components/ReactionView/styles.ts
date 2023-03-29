@@ -7,6 +7,10 @@ const styles = StyleSheet.create({
     zIndex: 10,
     height: verticalScale(80),
   },
+  textWrapperStyle: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 });
 
 export default styles;

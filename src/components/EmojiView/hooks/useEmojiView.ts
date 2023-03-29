@@ -29,6 +29,7 @@ const useEmojiView = (props: EmojiModalProps) => {
     onEmojiCloseModal = () => {},
     onShowDismissCard = () => {},
     isShowCardInCenter = false,
+    position = 0,
   } = props;
 
   const [currentEmoji, setCurrentEmoji] = useState<number>(0);
@@ -71,6 +72,9 @@ const useEmojiView = (props: EmojiModalProps) => {
     });
   }, [cardAnim, cardDuration, showPopUpCard]);
 
+  useEffect(() => {
+    setCurrentEmoji(position);
+  }, [position]);
   const panResponder = useRef(
     PanResponder.create({
       onMoveShouldSetPanResponder: () => true,
