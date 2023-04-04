@@ -84,26 +84,26 @@ const ReactionViewModal = ({ touchableProps, ...props }: ReactionViewProps) => {
     return children?.type?.displayName === 'View' ? (
       <TouchableOpacity
         activeOpacity={1}
-        onLongPress={() => (
-          isLongPress ? onPressHandler() : !isSinglePress && onPress(),
-          onLongPress()
-        )}
-        onPress={() => (
-          isLongPress ? onPressHandler() : !isSinglePress && onPress(),
-          onLongPress()
-        )}>
+        onLongPress={() => {
+          isLongPress ? onPressHandler() : !isSinglePress && onPress();
+          onLongPress();
+        }}
+        onPress={() => {
+          isSinglePress ? onPressHandler() : !isLongPress && onPress();
+          onPress();
+        }}>
         {child.props.children}
       </TouchableOpacity>
     ) : (
       React.cloneElement(children as React.ReactElement, {
-        onLongPress: () => (
-          isLongPress ? onPressHandler() : !isSinglePress && onPress(),
-          onLongPress()
-        ),
-        onPress: () => (
-          isLongPress ? onPressHandler() : !isSinglePress && onPress(),
-          onLongPress()
-        ),
+        onLongPress: () => {
+          isLongPress ? onPressHandler() : !isSinglePress && onPress();
+          onLongPress();
+        },
+        onPress: () => {
+          isSinglePress ? onPressHandler() : !isLongPress && onPress();
+          onPress();
+        },
       })
     );
   };
@@ -123,14 +123,14 @@ const ReactionViewModal = ({ touchableProps, ...props }: ReactionViewProps) => {
         contentHeightRef.current = height;
       }}
       activeOpacity={1}
-      onLongPress={() => (
-        isLongPress ? onPressHandler() : !isSinglePress && onPress(),
-        onLongPress()
-      )}
-      onPress={() => (
-        isSinglePress ? onPressHandler() : !isLongPress && onLongPress(),
-        onPress()
-      )}
+      onLongPress={() => {
+        isLongPress ? onPressHandler() : !isSinglePress && onPress();
+        onLongPress();
+      }}
+      onPress={() => {
+        isSinglePress ? onPressHandler() : !isLongPress && onLongPress();
+        onPress();
+      }}
       {...panResponder.panHandlers}>
       <View
         onTouchStart={() => {
@@ -144,14 +144,14 @@ const ReactionViewModal = ({ touchableProps, ...props }: ReactionViewProps) => {
         {React.isValidElement(children) && (
           <Text
             style={styles.textWrapperStyle}
-            onLongPress={() => (
-              isLongPress ? onPressHandler() : !isSinglePress && onPress(),
-              onLongPress()
-            )}
-            onPress={() => (
-              isSinglePress ? onPressHandler() : !isLongPress && onLongPress(),
-              onPress()
-            )}
+            onLongPress={() => {
+              isLongPress ? onPressHandler() : !isSinglePress && onPress();
+              onLongPress();
+            }}
+            onPress={() => {
+              isSinglePress ? onPressHandler() : !isLongPress && onLongPress();
+              onPress();
+            }}
             disabled={disabled}
             {...panResponder.panHandlers}>
             {renderChildren()}
