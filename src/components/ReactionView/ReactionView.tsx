@@ -3,7 +3,6 @@ import {
   LayoutRectangle,
   SafeAreaView,
   StyleSheet,
-  Text,
   TouchableOpacity,
   View,
 } from 'react-native';
@@ -90,36 +89,6 @@ const ReactionView = (props: ReactionViewProps) => {
     onShowDismissCard && onShowDismissCard(showPopUpCard);
   }, [onShowDismissCard, showPopUpCard]);
 
-  const child = React.Children.only(children);
-
-  const renderChildren = () => {
-    return children?.type?.displayName === 'View' ? (
-      <TouchableOpacity
-        activeOpacity={1}
-        onLongPress={() => {
-          isLongPress ? onPressHandler() : !isSinglePress && onPress();
-          onLongPress();
-        }}
-        onPress={() => {
-          isSinglePress ? onPressHandler() : !isLongPress && onPress();
-          onPress();
-        }}>
-        {child.props.children}
-      </TouchableOpacity>
-    ) : (
-      React.cloneElement(children as React.ReactElement, {
-        onLongPress: () => {
-          isLongPress ? onPressHandler() : !isSinglePress && onPress();
-          onLongPress();
-        },
-        onPress: () => {
-          isSinglePress ? onPressHandler() : !isLongPress && onPress();
-          onPress();
-        },
-      })
-    );
-  };
-
   return (
     <SafeAreaView
       ref={rootRef}
@@ -147,56 +116,38 @@ const ReactionView = (props: ReactionViewProps) => {
           />
         </View>
       )}
-      <TouchableOpacity
-        activeOpacity={1}
-        disabled={
-          disabled ||
-          children?.props?.hasOwnProperty('onPress') ||
-          children?.props?.hasOwnProperty('onLongPress')
-        }
-        {...touchableProps}
+      <View
         onLayout={event => {
           const { height } = event.nativeEvent.layout;
           setViewHeight(height);
         }}
-        onLongPress={() => {
-          isLongPress ? onPressHandler() : !isSinglePress && onPress();
-          onLongPress();
+        onTouchStart={() => {
+          setLoaded(true);
+          setTouchRelease(false);
         }}
-        onPress={() => {
-          isSinglePress ? onPressHandler() : !isLongPress && onLongPress();
-          onPress();
+        onTouchEnd={() => {
+          setLoaded(false);
+          checkTouchRelease && setTouchRelease(true);
         }}
         {...panResponder.panHandlers}>
-        <View
-          onTouchStart={() => {
-            setLoaded(true);
-            setTouchRelease(false);
-          }}
-          onTouchEnd={() => {
-            setLoaded(false);
-            checkTouchRelease && setTouchRelease(true);
-          }}>
-          {React.isValidElement(children) && (
-            <Text
-              style={styles.textWrapperStyle}
-              onLongPress={() => {
-                isLongPress ? onPressHandler() : !isSinglePress && onPress();
-                onLongPress();
-              }}
-              onPress={() => {
-                isSinglePress
-                  ? onPressHandler()
-                  : !isLongPress && onLongPress();
-                onPress();
-              }}
-              disabled={disabled}
-              {...panResponder.panHandlers}>
-              {renderChildren()}
-            </Text>
-          )}
-        </View>
-      </TouchableOpacity>
+        {React.isValidElement(children) && (
+          <TouchableOpacity
+            {...touchableProps}
+            hitSlop={{ top: 20, left: 20, right: 20, bottom: 20 }}
+            disabled={disabled}
+            activeOpacity={1}
+            onLongPress={() => {
+              isLongPress ? onPressHandler() : !isSinglePress && onPress();
+              onLongPress();
+            }}
+            onPress={() => {
+              isSinglePress ? onPressHandler() : !isLongPress && onPress();
+              onPress();
+            }}>
+            {children}
+          </TouchableOpacity>
+        )}
+      </View>
     </SafeAreaView>
   );
 };
