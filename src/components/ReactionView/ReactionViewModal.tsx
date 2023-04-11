@@ -5,11 +5,10 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { LayoutRectangle, Text, TouchableOpacity, View } from 'react-native';
+import { LayoutRectangle, TouchableOpacity, View } from 'react-native';
 import { reactionModalRef } from '../ReactionModal';
 import { useReaction } from './hooks';
-import styles from './styles';
-import type { ReactionViewProps, GetCoordinateRef } from './types';
+import type { GetCoordinateRef, ReactionViewProps } from './types';
 
 export const getCoordinatesRef = createRef<GetCoordinateRef>();
 
@@ -20,7 +19,7 @@ const ReactionViewModal = ({ touchableProps, ...props }: ReactionViewProps) => {
     disabled = false,
     onLongPress = () => {},
   } = props;
-  const rootRef = useRef<TouchableOpacity>(null);
+  const rootRef = useRef<View>(null);
   const contentHeightRef = useRef<number>(0);
   const contentyRef = useRef<number>(0);
   const [touchRelease, setTouchRelease] = useState<boolean>(false);
@@ -74,91 +73,45 @@ const ReactionViewModal = ({ touchableProps, ...props }: ReactionViewProps) => {
       });
   }, [loaded, panResponder, position, props, touchRelease]);
 
-  const child = React.Children.only(children);
   const checkTouchRelease =
     position &&
     position > emojiViewCoordinates.x &&
     position <= emojiViewCoordinates.width + emojiViewCoordinates.x;
 
-  const renderChildren = () => {
-    return children?.type?.displayName === 'View' ? (
-      <TouchableOpacity
-        activeOpacity={1}
-        onLongPress={() => (
-          isLongPress ? onPressHandler() : !isSinglePress && onPress(),
-          onLongPress()
-        )}
-        onPress={() => (
-          isLongPress ? onPressHandler() : !isSinglePress && onPress(),
-          onLongPress()
-        )}>
-        {child.props.children}
-      </TouchableOpacity>
-    ) : (
-      React.cloneElement(children as React.ReactElement, {
-        onLongPress: () => (
-          isLongPress ? onPressHandler() : !isSinglePress && onPress(),
-          onLongPress()
-        ),
-        onPress: () => (
-          isLongPress ? onPressHandler() : !isSinglePress && onPress(),
-          onLongPress()
-        ),
-      })
-    );
-  };
-
   return (
-    <TouchableOpacity
-      hitSlop={{ top: 20, left: 20, right: 20, bottom: 20 }}
+    <View
       ref={rootRef}
-      disabled={
-        disabled ||
-        children?.props?.hasOwnProperty('onPress') ||
-        children?.props?.hasOwnProperty('onLongPress')
-      }
-      {...touchableProps}
       onLayout={event => {
         const { height } = event.nativeEvent.layout;
         contentHeightRef.current = height;
       }}
-      activeOpacity={1}
-      onLongPress={() => (
-        isLongPress ? onPressHandler() : !isSinglePress && onPress(),
-        onLongPress()
-      )}
-      onPress={() => (
-        isSinglePress ? onPressHandler() : !isLongPress && onLongPress(),
-        onPress()
-      )}
+      onTouchStart={() => {
+        setLoaded(true);
+        setTouchRelease(false);
+      }}
+      onTouchEnd={() => {
+        setLoaded(false);
+        checkTouchRelease && setTouchRelease(true);
+      }}
       {...panResponder.panHandlers}>
-      <View
-        onTouchStart={() => {
-          setLoaded(true);
-          setTouchRelease(false);
-        }}
-        onTouchEnd={() => {
-          setLoaded(false);
-          checkTouchRelease && setTouchRelease(true);
-        }}>
-        {React.isValidElement(children) && (
-          <Text
-            style={styles.textWrapperStyle}
-            onLongPress={() => (
-              isLongPress ? onPressHandler() : !isSinglePress && onPress(),
-              onLongPress()
-            )}
-            onPress={() => (
-              isSinglePress ? onPressHandler() : !isLongPress && onLongPress(),
-              onPress()
-            )}
-            disabled={disabled}
-            {...panResponder.panHandlers}>
-            {renderChildren()}
-          </Text>
-        )}
-      </View>
-    </TouchableOpacity>
+      {React.isValidElement(children) && (
+        <TouchableOpacity
+          {...touchableProps}
+          hitSlop={{ top: 20, left: 20, right: 20, bottom: 20 }}
+          disabled={disabled}
+          activeOpacity={1}
+          onLongPress={() => {
+            isLongPress ? onPressHandler() : !isSinglePress && onPress();
+            onLongPress();
+          }}
+          onPress={() => {
+            isSinglePress ? onPressHandler() : !isLongPress && onPress();
+            onPress();
+          }}>
+          {children}
+        </TouchableOpacity>
+      )}
+    </View>
   );
 };
 
