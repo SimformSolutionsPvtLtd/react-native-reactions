@@ -5,7 +5,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { LayoutRectangle, TouchableOpacity, View } from 'react-native';
+import { LayoutRectangle, View, Pressable } from 'react-native';
 import { reactionModalRef } from '../ReactionModal';
 import { useReaction } from './hooks';
 import type { GetCoordinateRef, ReactionViewProps } from './types';
@@ -95,11 +95,10 @@ const ReactionViewModal = ({ touchableProps, ...props }: ReactionViewProps) => {
       }}
       {...panResponder.panHandlers}>
       {React.isValidElement(children) && (
-        <TouchableOpacity
+        <Pressable
           {...touchableProps}
           hitSlop={{ top: 20, left: 20, right: 20, bottom: 20 }}
           disabled={disabled}
-          activeOpacity={1}
           onLongPress={() => {
             isLongPress ? onPressHandler() : !isSinglePress && onPress();
             onLongPress();
@@ -109,7 +108,7 @@ const ReactionViewModal = ({ touchableProps, ...props }: ReactionViewProps) => {
             onPress();
           }}>
           {children}
-        </TouchableOpacity>
+        </Pressable>
       )}
     </View>
   );
