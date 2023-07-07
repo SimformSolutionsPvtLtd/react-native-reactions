@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import {
   LayoutRectangle,
+  Pressable,
   SafeAreaView,
   StyleSheet,
-  TouchableOpacity,
   View,
 } from 'react-native';
 import EmojiView from '../EmojiView';
@@ -49,7 +49,6 @@ const ReactionView = (props: ReactionViewProps) => {
     showCardInCenter,
     panResponder,
     position,
-    mainViewWidth,
   } = useReaction(props);
 
   const onPressHandler = () => {
@@ -77,7 +76,7 @@ const ReactionView = (props: ReactionViewProps) => {
   const hoverIndex: number = showTopEmojiCard ? -itemIndex : 1;
   const checkTouchRelease =
     position &&
-    position > emojiViewCoordinates.x + mainViewWidth &&
+    position > emojiViewCoordinates.x &&
     position <= emojiViewCoordinates.width + emojiViewCoordinates.x;
   const onStartShouldSetResponder = () => {
     setShowPopUpCard(!showPopUpCard);
@@ -131,11 +130,10 @@ const ReactionView = (props: ReactionViewProps) => {
         }}
         {...panResponder.panHandlers}>
         {React.isValidElement(children) && (
-          <TouchableOpacity
+          <Pressable
             {...touchableProps}
             hitSlop={{ top: 20, left: 20, right: 20, bottom: 20 }}
             disabled={disabled}
-            activeOpacity={1}
             onLongPress={() => {
               isLongPress ? onPressHandler() : !isSinglePress && onPress();
               onLongPress();
@@ -145,7 +143,7 @@ const ReactionView = (props: ReactionViewProps) => {
               onPress();
             }}>
             {children}
-          </TouchableOpacity>
+          </Pressable>
         )}
       </View>
     </SafeAreaView>
