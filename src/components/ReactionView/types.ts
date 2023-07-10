@@ -1,7 +1,7 @@
 import type {
   LayoutRectangle,
+  PressableProps,
   StyleProp,
-  TouchableOpacityProps,
   ViewStyle,
 } from 'react-native';
 import type { emojiProps } from '../EmojiItem/types';
@@ -13,7 +13,7 @@ export interface ReactionViewProps extends emojiProps, EmojiAnimationProps {
   items?: EmojiItemProp[];
   onTap?: (e: EmojiItemProp | undefined) => void;
   cardStyle?: StyleProp<ViewStyle>;
-  touchableProps?: TouchableOpacityProps;
+  touchableProps?: PressableProps;
   itemIndex?: number;
   onShowDismissCard?: (onShowDismissCardType?: boolean) => void;
   isShowCardInCenter?: boolean;

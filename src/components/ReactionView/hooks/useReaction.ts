@@ -45,12 +45,19 @@ const useReaction = (props: ReactionViewProps) => {
   const isLongPress = showPopupType === GlobalConstants.default;
   const panResponder = useRef(
     PanResponder.create({
-      onMoveShouldSetPanResponder: () => true,
       onStartShouldSetPanResponder: () => true,
       onPanResponderGrant: () => {},
       onPanResponderMove: event => onGesture(event),
       onPanResponderEnd: () => {
         setPosition(0);
+      },
+      onMoveShouldSetPanResponder: (_, gestureState) => {
+        const { dx, dy } = gestureState;
+        return dx > 2 || dx < -2 || dy > 2 || dy < -2;
+      },
+      onMoveShouldSetPanResponderCapture: (_, gestureState) => {
+        const { dx, dy } = gestureState;
+        return dx > 2 || dx < -2 || dy > 2 || dy < -2;
       },
     })
   ).current;
