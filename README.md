@@ -2,7 +2,7 @@
 
 # react-native-reactions
 
-[![npm version](https://img.shields.io/badge/npm%20package-0.0.3-orange)](https://www.npmjs.org/package/react-native-country-code-select) [![Android](https://img.shields.io/badge/Platform-Android-green?logo=android)](https://www.android.com) [![iOS](https://img.shields.io/badge/Platform-iOS-green?logo=apple)](https://developer.apple.com/ios) [![MIT](https://img.shields.io/badge/License-MIT-green)](https://opensource.org/licenses/MIT)
+[![react-native-reactions on npm](https://badgen.net/npm/v/react-native-reactions)](https://www.npmjs.com/package/react-native-reactions) [![react-native-reactions downloads](https://badgen.net/npm/dm/react-native-reactions)](https://www.npmtrends.com/react-native-reactions) [![react-native-reactions install size](https://packagephobia.com/badge?p=react-native-reactions)](https://packagephobia.com/result?p=react-native-reactions) [![Android](https://img.shields.io/badge/Platform-Android-green?logo=android)](https://www.android.com) [![iOS](https://img.shields.io/badge/Platform-iOS-green?logo=apple)](https://developer.apple.com/ios) [![MIT](https://img.shields.io/badge/License-MIT-green)](https://opensource.org/licenses/MIT)
 
 ---
 
