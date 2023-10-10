@@ -47,7 +47,7 @@ const useEmojiItem = (props: EmojiItemProps) => {
     setTitlePosition(e.nativeEvent.layout.x - 4);
   };
 
-  const reverseEnim = (scaleEmoji as any).value === 2 ? [2, 1, 0] : [0, 1, 2];
+  const reverseEnim = (scaleEmoji as any).value === 2 ? [2, 1, 1] : [1, 1, 2];
 
   useEffect(() => {
     scaleEmoji.value = withTiming(scaled ? 2 : 1, {
