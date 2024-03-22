@@ -28,7 +28,9 @@ export interface emojiProps {
   iconSize?: number;
   titleStyle?: StyleProp<TextStyle>;
   titleBoxStyle?: StyleProp<ViewStyle>;
+  selectedEmoji?: EmojiItemProp;
   emojiContainerStyle?: StyleProp<ViewStyle>;
+  emojiSelectedContainerStyle?: StyleProp<ViewStyle>;
   emojiDuration?: number;
   scaleDuration?: number;
   emojiStyle?: StyleProp<TextStyle>;
