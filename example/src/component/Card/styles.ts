@@ -31,5 +31,8 @@ export const styles = StyleSheet.create({
         width: scale(18),
         height: verticalScale(18),
         resizeMode: "contain"
+    },
+    text: {
+        color: Colors.black
     }
 })

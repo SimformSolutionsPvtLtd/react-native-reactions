@@ -19,9 +19,9 @@ const Footer = ({
       itemIndex={index}
       onTap={setSelectedEmoji}
       onShowDismissCard={onShowDismissCard}>
-      <Text>{selectedEmoji ? selectedEmoji?.emoji : Strings?.like}</Text>
+      <Text style={styles.text}>{selectedEmoji ? selectedEmoji?.emoji : Strings?.like}</Text>
     </Reaction>
-    <Text>{Strings?.share}</Text>
+    <Text style={styles.text}>{Strings?.share}</Text>
   </View>
 );
 
