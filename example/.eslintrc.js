@@ -1,5 +1,5 @@
 {
-  "extends": ["@react-native-community", "prettier"],
+  "extends": ["@react-native", "prettier"],
   "rules": {
     "prettier/prettier": [
       "error",
@@ -18,5 +18,5 @@
   "globals": {
       "JSX": "readonly"
   },
-  "plugins": ["prettier"]
+  "plugins": ["prettier", "jest"]
 }

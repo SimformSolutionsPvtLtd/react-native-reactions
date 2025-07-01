@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import {
-  GestureResponderEvent,
+  type GestureResponderEvent,
   PanResponder,
   useWindowDimensions,
 } from 'react-native';

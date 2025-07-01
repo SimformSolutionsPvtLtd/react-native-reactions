@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { LayoutRectangle, StyleSheet, View } from 'react-native';
+import { type LayoutRectangle, StyleSheet, View } from 'react-native';
 import EmojiItem from '../EmojiItem';
 import { useEmojiView } from './hooks';
 import { styles } from './styles';

@@ -5,7 +5,8 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { LayoutRectangle, Pressable, View } from 'react-native';
+import { Pressable, View } from 'react-native';
+import type { LayoutRectangle } from 'react-native';
 import { reactionModalRef } from '../ReactionModal';
 import { useReaction } from './hooks';
 import type { GetCoordinateRef, ReactionViewProps } from './types';
