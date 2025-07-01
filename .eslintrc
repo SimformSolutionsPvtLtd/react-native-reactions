@@ -1,5 +1,10 @@
 {
-  "extends": ["@react-native-community", "prettier"],
+  "extends": [
+    "@react-native",
+    "prettier",
+    "eslint:recommended",
+    "plugin:jest/recommended"
+  ],
   "root": true,
   "rules": {
     "prettier/prettier": [
@@ -24,5 +29,5 @@
   "env": {
     "jest": true
   },
-  "plugins": ["prettier"]
+  "plugins": ["prettier", "jest"]
 }

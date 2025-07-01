@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import {
-  LayoutRectangle,
+  type LayoutRectangle,
   Pressable,
   SafeAreaView,
   StyleSheet,

@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+// @ts-ignore
 import type { LayoutChangeEvent, TouchableOpacity } from 'react-native';
 import {
   interpolate,
@@ -35,6 +36,7 @@ const useEmojiItem = (props: EmojiItemProps) => {
     );
   }, [waveAnim, index, showPopUpCard, emojiDuration]);
 
+  // @ts-ignore
   const childRef = useRef<TouchableOpacity | null>(null);
 
   const onLayout = (e: LayoutChangeEvent) => {

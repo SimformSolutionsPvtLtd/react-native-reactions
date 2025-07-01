@@ -3,7 +3,7 @@ import {
   PanResponder,
   StyleSheet,
   useWindowDimensions,
-  GestureResponderEvent,
+  type GestureResponderEvent,
 } from 'react-native';
 import type { EmojiItemProp } from '../../ReactionView/types';
 import { GlobalConstants } from '../../../constants';
@@ -98,6 +98,7 @@ const useEmojiView = (props: EmojiModalProps) => {
     }
   };
 
+  // @ts-ignore
   const subContainer = StyleSheet.create([
     {
       alignItems:

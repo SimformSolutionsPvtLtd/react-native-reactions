@@ -26,6 +26,7 @@ const EmojiButton = ({
 
   if (isValidEmement) {
     return React.cloneElement(emoji as React.ReactElement, {
+      // @ts-ignore
       style: emojiElementStyle,
     });
   } else if (isValidUrl(emoji as string) || isNumber) {
